@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    display: flex;
+    background-color: lightgray;
+    padding: 10px;
+}
+
+header {
+    justify-content: space-between;
+    align-content: center;
+}
+
+header img {
+    width: 10%;
+    height: 10%;
+}
+
+header ul {
+    display: flex;
+    list-style: none;
+    gap: 50px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main h1, section h2 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+}
+
+.table_cell {
+    border: solid gray 2px;
+    padding: 10px;
+    gap: 5px;
+}
+
+th {
+    color: red;
+    font-size: 20px;
+}
+
+section form.form-example {
+    display: table;
+}
+
+section div.form-example {
+    display: table-row;
+}
+
+section label, section input {
+    display: table-cell;
+}
+
+section form div {
+    gap: 10px;
+}
+
+footer {
+    justify-content: end;
+    gap: 20px;
+}
+
+footer img {
+    width: 3%;
+    height: 3%;
+}
