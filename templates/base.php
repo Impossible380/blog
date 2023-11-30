@@ -16,16 +16,16 @@
             <ul>
                 <li>
                     <?php if ($_SESSION["user_connected"]) { ?>
-                        <a href="index.php?user_action=log_out">Se déconnecter</a>
+                        <a href="/logout">Se déconnecter</a>
                     <?php } else { ?>
-                        <a href="log_in.php">Se connecter</a>
+                        <a href="/login">Se connecter</a>
                     <?php } ?>
                 </li>
                 <li>
-                    <a href="index.php">Accueil</a>
+                    <a href="/">Accueil</a>
                 </li>
                 <li>
-                    <a href="articles_list.php">Liste des blogs posts</a>
+                    <a href="/articles/list">Liste des blogs posts</a>
                 </li>
             </ul>
 
