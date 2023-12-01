@@ -1,15 +1,21 @@
 <?php
     require_once("lib.php");
 
+    if (!$_SESSION["user_connected"]) {
+        $_SESSION["message"] = "Vous n'êtes pas connecté.";
+        header("location: log_in.php");
+        exit();
+    }
+
     if (!empty($_POST)) {
         $pdo->exec("INSERT INTO articles(title, content, author_id)
-                    VALUES(\"". $_POST["title"] ."\", \"". $_POST["content"] ."\", 1)");
+                    VALUES(\"". $_POST["title"] ."\", \"". $_POST["content"] ."\", \"". $_SESSION["user"]["id"] ."\")");
                     
         $_SESSION["message"] = "L'article qui a comme titre '". $_POST["title"] ."'
         et comme contenu '". $_POST["content"] ."' a bien été ajouté.";
         
         header("location: articles_list.php");
-        exit(0);
+        exit();
     }
 ?>
 

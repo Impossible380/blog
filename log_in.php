@@ -1,11 +1,6 @@
 <?php
-    if (empty($_SESSION["user_connected"])) {
-        $_SESSION["user_connected"] = false;
-    }
-?>
+    require_once("lib.php");
 
-
-<?php
     if ($_SESSION["user_connected"]) {
         header("location: index.php");
     }
@@ -30,11 +25,12 @@
         /* if (!empty($_POST)) { */
         if ($user) {
             $_SESSION["user"] = $user;
+            /* $_SESSION["user"]["id"] = intval($_SESSION["user"]["id"]); */
             $_SESSION["user_connected"] = true;
             $_SESSION["message"] = "Bonjour et bienvenue sur mon site.";
 
             header("location: index.php");
-            exit(0);
+            exit();
 
         } else {
             $_SESSION["message"] = "Email ou mot de passe invalide";

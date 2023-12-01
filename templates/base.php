@@ -14,6 +14,12 @@
             
             <img src="images/logo.jpg">
             <ul>
+                <?php
+                    if ($_SESSION["user_connected"]) {
+                        echo '<li class="user_infos">'. $_SESSION['user']['firstname']
+                            .' '. $_SESSION['user']['lastname'] .'</li>';
+                    }
+                ?>
                 <li>
                     <?php if ($_SESSION["user_connected"]) { ?>
                         <a href="index.php?user_action=log_out">Se déconnecter</a>

@@ -13,7 +13,7 @@ header, footer {
 
 header {
     justify-content: space-between;
-    align-content: center;
+    align-items: center;
 }
 
 header img {
@@ -25,6 +25,13 @@ header ul {
     display: flex;
     list-style: none;
     gap: 50px;
+    align-items: center;
+}
+
+header ul .user_infos {
+    background-color: white;
+    padding: 5px;
+    color: red;
 }
 
 section {

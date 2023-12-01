@@ -24,3 +24,6 @@
 * quelque corrections
 * introduction aux classes et programmation orienté objet
 ## A faire pour la prochaine fois
+* Afficher le nom de l'utilisateur connecté
+* Gérer l'inscription d'un utilisateur
+* Modifier la création d'un article (l'author_id doit être l'utilisateur connecté)

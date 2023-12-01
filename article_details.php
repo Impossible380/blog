@@ -1,5 +1,6 @@
 <?php
     require_once("lib.php");
+    
     $id = $_GET["id"];
     
     $query = $pdo->prepare("SELECT *

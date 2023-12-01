@@ -1,7 +1,12 @@
 <?php
     require_once("lib.php");
     
-    $query = $pdo->query("SELECT * FROM articles;");
+    /* $query = $pdo->query("SELECT * FROM articles;"); */
+    $query = $pdo->query("SELECT `articles`.`id`, `title`, `content`, `author_id`, `users`.`firstname`,
+                                `users`.`lastname`
+                            FROM `articles`
+                            JOIN `users`
+                            ON `author_id` = `users`.`id`");
 
     $articles = $query->fetchAll(\PDO::FETCH_ASSOC);
 ?>
@@ -16,6 +21,8 @@
                 <th class="table_cell">title</th>
                 <th class="table_cell">content</th>
                 <th class="table_cell">author_id</th>
+                <th class="table_cell">firstname</th>
+                <th class="table_cell">lastname</th>
                 <th class="table_cell">options</th>
             </tr>
         </thead>
@@ -38,10 +45,16 @@
                         <?php echo $article['author_id']; ?>
                     </td>
                     <td class="table_cell">
-                        <a href="modify_article.php?id=<?php echo $article['id']; ?>">
+                        <?php echo $article['firstname']; ?>
+                    </td>
+                    <td class="table_cell">
+                        <?php echo $article['lastname']; ?>
+                    </td>
+                    <td class="table_cell">
+                        <a href="modify_article.php?id=<?php echo $article['id']; ?>&author_id=<?php echo $article['author_id']; ?>">
                             Modifier
                         </a>
-                        <a href="delete_article.php?id=<?php echo $article['id']; ?>">
+                        <a href="delete_article.php?id=<?php echo $article['id']; ?>&author_id=<?php echo $article['author_id']; ?>">
                             Supprimer
                         </a>
                     </td>

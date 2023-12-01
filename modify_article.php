@@ -1,6 +1,19 @@
 <?php
     require_once("lib.php");
+
     $id = $_GET["id"];
+    $author_id = $_GET["author_id"];
+
+    if (!$_SESSION["user_connected"]) {
+        $_SESSION["message"] = "Vous n'êtes pas connecté.";
+        header("location: log_in.php");
+        exit();
+
+    } else if ($author_id !== $_SESSION["user"]["id"]) {
+        $_SESSION["message"] = "Vous n'êtes pas l'auteur de cet article.";
+        header("location: articles_list.php");
+        exit();
+    }
 
     /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
@@ -8,7 +21,9 @@
                                 FROM articles
                                 WHERE id = :id");
 
-    $query->execute([":id" => $id]);
+    $query->execute([
+        ":id" => $id,
+    ]);
     
     $article = $query->fetch(\PDO::FETCH_ASSOC);
 
@@ -24,7 +39,7 @@
         modifié.";
                     
         header("location: articles_list.php");
-        exit(0);
+        exit();
     }
 ?>
 
