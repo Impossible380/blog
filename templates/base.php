@@ -24,7 +24,7 @@
                     <?php if ($_SESSION["user_connected"]) { ?>
                         <a href="index.php?user_action=log_out">Se déconnecter</a>
                     <?php } else { ?>
-                        <a href="log_in.php">Se connecter</a>
+                        <a href="login.php">Se connecter</a>
                     <?php } ?>
                 </li>
                 <li>

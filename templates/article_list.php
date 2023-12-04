@@ -1,17 +1,3 @@
-<?php
-    require_once("lib.php");
-    
-    /* $query = $pdo->query("SELECT * FROM articles;"); */
-    $query = $pdo->query("SELECT `articles`.`id`, `title`, `content`, `author_id`, `users`.`firstname`,
-                                `users`.`lastname`
-                            FROM `articles`
-                            JOIN `users`
-                            ON `author_id` = `users`.`id`");
-
-    $articles = $query->fetchAll(\PDO::FETCH_ASSOC);
-?>
-
-
 <?php ob_start(); ?>
 
     <table>
@@ -71,4 +57,4 @@
 <?php $content = ob_get_clean(); ?>
 
 
-<?php require("templates/base.php"); ?>
+<?php require("../templates/base.php"); ?>

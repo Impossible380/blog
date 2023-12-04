@@ -27,3 +27,19 @@
 * Afficher le nom de l'utilisateur connecté
 * Gérer l'inscription d'un utilisateur
 * Modifier la création d'un article (l'author_id doit être l'utilisateur connecté)
+
+# 04/12/2023
+## Pendant la session
+```bash
+php -S localhost:8080 -t public
+```
+/ --> page d'accueil
+/articles --> liste des articles
+/articles/1 --> détail de l'article 1
+/articles/1/modify --> modfification de l'article 1
+/articles/1/delete --> suppressions de l'article 1
+/articles/new --> création d'un article
+/login --> se connecter
+/logout --> se déconnecter
+/users --> liste des utilisateurs
+

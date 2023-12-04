@@ -1,13 +1,3 @@
-<?php
-    require_once("lib.php");
-
-    if (isset($_GET["user_action"]) && $_GET["user_action"] === "log_out") {
-        $_SESSION["message"] = "Merci et à bientôt !";
-        $_SESSION["user_connected"] = false;
-    }
-?>
-
-
 <?php ob_start(); ?>
 
     <h1>La presse de Martin Durand</h1>
@@ -53,4 +43,4 @@
 <?php $content = ob_get_clean(); ?>
 
 
-<?php require("templates/base.php"); ?>
+<?php require("../templates/base.php"); ?>
