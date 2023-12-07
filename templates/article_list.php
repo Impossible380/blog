@@ -17,30 +17,30 @@
             <?php foreach($articles as $article) { ?>
                 <tr>
                     <td class="table_cell">
-                        <?php echo $article['id']; ?>
+                        <?php echo $article["id"]; ?>
                     </td>
                     <td class="table_cell">
-                        <a href="article_details.php?id=<?php echo $article['id']; ?>">
-                            <?php echo $article['title']; ?>
+                        <a href="article_details.php?id=<?php echo $article["id"]; ?>">
+                            <?php echo $article["title"]; ?>
                         </a>
                     </td>
                     <td class="table_cell">
-                        <?php echo $article['content']; ?>
+                        <?php echo $article["content"]; ?>
                     </td>
                     <td class="table_cell">
-                        <?php echo $article['author_id']; ?>
+                        <?php echo $article["author_id"]; ?>
                     </td>
                     <td class="table_cell">
-                        <?php echo $article['firstname']; ?>
+                        <?php echo $article["firstname"]; ?>
                     </td>
                     <td class="table_cell">
-                        <?php echo $article['lastname']; ?>
+                        <?php echo $article["lastname"]; ?>
                     </td>
                     <td class="table_cell">
-                        <a href="modify_article.php?id=<?php echo $article['id']; ?>&author_id=<?php echo $article['author_id']; ?>">
+                        <a href="/articles/<?php echo $article["id"]; ?>/edit?author_id=<?php echo $article["author_id"]; ?>">
                             Modifier
                         </a>
-                        <a href="delete_article.php?id=<?php echo $article['id']; ?>&author_id=<?php echo $article['author_id']; ?>">
+                        <a href="/articles/<?php echo $article["id"]; ?>/delete?author_id=<?php echo $article["author_id"]; ?>">
                             Supprimer
                         </a>
                     </td>
@@ -50,7 +50,7 @@
         </tbody>
     </table>
 
-    <a href="insert_article.php">Ajouter</a>
+    <a href="/articles/new">Ajouter</a>
 
     <?php $title = "Liste des articles"; ?>
 

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 class AuthController {
     function login() {
+        require_once("lib.php");
+        
         if ($_SESSION["user_connected"]) {
             header("location: /");
         }

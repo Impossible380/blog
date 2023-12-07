@@ -35,11 +35,10 @@ php -S localhost:8080 -t public
 ```
 / --> page d'accueil
 /articles --> liste des articles
-/articles/1 --> détail de l'article 1
-/articles/1/modify --> modfification de l'article 1
-/articles/1/delete --> suppressions de l'article 1
+/articles/1 --> détails de l'article 1
+/articles/1/modify --> modification de l'article 1
+/articles/1/delete --> suppression de l'article 1
 /articles/new --> création d'un article
 /login --> se connecter
 /logout --> se déconnecter
 /users --> liste des utilisateurs
-

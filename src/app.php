@@ -24,21 +24,33 @@ use App\Controller\ArticleController;
         exit(0);
     }
 
-    if ($url === '/articles/new') { 
-        $controller = new ArticleController();
-        $controller->new();
-        exit(0);
-    }
-
     if ($url === '/articles') { 
         $controller = new ArticleController();
         $controller->list();
         exit(0);
     }
 
+    if ($url === '/articles/details') { 
+        $controller = new ArticleController();
+        $controller->details();
+        exit(0);
+    }
+
     if ($url === '/articles/new') {
         $controller = new ArticleController();
         $controller->new();
+        exit(0);
+    }
+
+    if ($url === '/articles/edit') { 
+        $controller = new ArticleController();
+        $controller->edit();
+        exit(0);
+    }
+
+    if ($url === '/articles/delete') { 
+        $controller = new ArticleController();
+        $controller->delete();
         exit(0);
     }
 
