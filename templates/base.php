@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title><?php echo $title ?></title>
-        <link rel="stylesheet" type="text/css" href="style.css?<?=rand()?>">
+        <link rel="stylesheet" type="text/css" href="/style.css?<?=rand()?>">
     </head>
 
     <!-- Début BODY -->
@@ -12,7 +12,7 @@
         <!-- Début HEADER -->
         <header>
             
-            <img src="images/logo.jpg">
+            <img src="/images/logo.jpg">
             <ul>
                 <?php
                     if ($_SESSION["user_connected"]) {
@@ -54,9 +54,9 @@
         <!-- Début FOOTER -->
         <footer>
             
-            <img src="images/logo_facebook.png">
-            <img src="images/logo_twitter.png">
-            <img src="images/logo_instagram.png">
+            <img src="/images/logo_facebook.png">
+            <img src="/images/logo_twitter.png">
+            <img src="/images/logo_instagram.png">
 
         </footer>
         <!-- Fin FOOTER -->

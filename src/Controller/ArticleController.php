@@ -2,43 +2,39 @@
 
 namespace App\Controller;
 
+use App\Service\Database;
+
 class ArticleController {
     function list() {
-        require_once("lib.php");
-        
         /* $query = $pdo->query("SELECT *, `users`.`firstname`, `users`.`lastname`
                                 FROM `articles`
                                 JOIN `users`
                                 ON `author_id` = `users`.`id`"); */
                                 
-        $query = $pdo->query("SELECT `articles`.`id`, `title`, `content`, `author_id`,
-                                        `users`.`firstname`, `users`.`lastname`
-                                FROM `articles`
-                                JOIN `users`
-                                ON `author_id` = `users`.`id`");
+        $query = Database::get()->query("SELECT `articles`.`id`, `title`, `content`, `author_id`,
+                                                `users`.`firstname`, `users`.`lastname`
+                                        FROM `articles`
+                                        JOIN `users`
+                                        ON `author_id` = `users`.`id`");
 
         $articles = $query->fetchAll(\PDO::FETCH_ASSOC);
         
         require("../templates/article_list.php");
     }
 
-    function details() {
-        require_once("lib.php");
-        
-        $id = $_GET["id"];
-        
-        $query = $pdo->prepare("SELECT *
-                                FROM articles
-                                WHERE id = :id");
+    function details($id) {
+        $query = Database::get()->prepare("SELECT *
+                                            FROM articles
+                                            WHERE id = :id");
 
         $query->execute([":id" => $id]);
         
         $article = $query->fetch(\PDO::FETCH_ASSOC);
+
+        require("../templates/article_details.php");
     }
 
     function new() {
-        require_once("lib.php");
-
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = "Vous n'êtes pas connecté.";
             header("location: /login");
@@ -46,8 +42,8 @@ class ArticleController {
         }
         
         if (!empty($_POST)) {
-            $pdo->exec("INSERT INTO articles(title, content, author_id)
-                        VALUES(\"". $_POST["title"] ."\", \"". $_POST["content"] ."\", \"". $_SESSION["user"]["id"] ."\")");
+            Database::get()->exec("INSERT INTO articles(title, content, author_id)
+                                    VALUES(\"". $_POST["title"] ."\", \"". $_POST["content"] ."\", \"". $_SESSION["user"]["id"] ."\")");
                         
             $_SESSION["message"] = "L'article qui a comme titre '". $_POST["title"] ."'
             et comme contenu '". $_POST["content"] ."' a bien été ajouté.";
@@ -59,11 +55,7 @@ class ArticleController {
         require("../templates/new_form.php");
     }
 
-    function edit() {
-        require_once("lib.php");
-
-        $id = $_GET["id"];
-
+    function edit($id) {
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = "Vous n'êtes pas connecté.";
             header("location: /login");
@@ -72,9 +64,9 @@ class ArticleController {
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = $pdo->prepare("SELECT *
-                                FROM articles
-                                WHERE id = :id");
+        $query = Database::get()->prepare("SELECT *
+                                            FROM articles
+                                            WHERE id = :id");
 
         $query->execute([
             ":id" => $id,
@@ -89,10 +81,10 @@ class ArticleController {
         }
 
         if (!empty($_POST)) {
-            $pdo->exec("UPDATE articles
-                        SET title = \"". $_POST["title"] ."\",
-                            content = \"". $_POST["content"] ."\"
-                        WHERE id = \"". $id ."\"");
+            Database::get()->exec("UPDATE articles
+                                    SET title = \"". $_POST["title"] ."\",
+                                        content = \"". $_POST["content"] ."\"
+                                    WHERE id = \"". $id ."\"");
                         
             $_SESSION["message"] = "L'article qui a comme id '". $id ."', comme titre
             '". $_POST["title"] ."' (anciennement '". $article["title"] ."') et comme contenu
@@ -106,11 +98,7 @@ class ArticleController {
         require("../templates/edit_form.php");
     }
 
-    function delete() {
-        require_once("lib.php");
-
-        $id = $_GET["id"];
-
+    function delete($id) {
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = "Vous n'êtes pas connecté.";
             header("location: /login");
@@ -119,9 +107,9 @@ class ArticleController {
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = $pdo->prepare("SELECT *
-                                FROM articles
-                                WHERE id = :id");
+        $query = Database::get()->prepare("SELECT *
+                                            FROM articles
+                                            WHERE id = :id");
 
         $query->execute([
             ":id" => $id,
@@ -135,9 +123,11 @@ class ArticleController {
             exit();
         }
 
-        $pdo->exec("DELETE FROM articles WHERE id = \"". $id ."\";
-                    ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL;
-                    ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
+        Database::get()->exec("DELETE
+                                FROM articles
+                                WHERE id = \"". $id ."\";
+                                ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL;
+                                ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
         
         $_SESSION["message"] = "L'article qui a comme id '". $id ."' a bien été
         supprimé.";

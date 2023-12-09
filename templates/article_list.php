@@ -20,7 +20,7 @@
                         <?php echo $article["id"]; ?>
                     </td>
                     <td class="table_cell">
-                        <a href="article_details.php?id=<?php echo $article["id"]; ?>">
+                        <a href="/articles/<?php echo $article["id"]; ?>">
                             <?php echo $article["title"]; ?>
                         </a>
                     </td>
@@ -37,10 +37,10 @@
                         <?php echo $article["lastname"]; ?>
                     </td>
                     <td class="table_cell">
-                        <a href="/articles/<?php echo $article["id"]; ?>/edit?author_id=<?php echo $article["author_id"]; ?>">
+                        <a href="/articles/<?php echo $article["id"]; ?>/edit">
                             Modifier
                         </a>
-                        <a href="/articles/<?php echo $article["id"]; ?>/delete?author_id=<?php echo $article["author_id"]; ?>">
+                        <a href="/articles/<?php echo $article["id"]; ?>/delete">
                             Supprimer
                         </a>
                     </td>

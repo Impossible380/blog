@@ -42,3 +42,19 @@ php -S localhost:8080 -t public
 /login --> se connecter
 /logout --> se déconnecter
 /users --> liste des utilisateurs
+
+# 07/12/2023
+## Pendant la session
+* Partie visiteur
+/ --> page d'accueil
+/articles --> liste des articles
+/articles/1 --> détails de l'article 1
+/login --> se connecter
+/logout --> se déconnecter
+* Partie administrateur
+/admin/articles --> list des articles
+/admin/articles/1/modify --> modification de l'article 1
+/admin/articles/1/delete --> suppression de l'article 1
+/admin/users --> list des utilisateurs
+/admin/users/1/modify --> modification d'un utilisateur
+/admin/users/1/delete --> suppression d'un utilisateur

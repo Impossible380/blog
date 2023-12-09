@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
+use App\Service\Database;
+
 class AuthController {
     function login() {
-        require_once("lib.php");
-        
         if ($_SESSION["user_connected"]) {
             header("location: /");
         }
         
         if (!empty($_POST)) {
-            $query = $pdo->prepare("SELECT *
+            $query = Database::get()->prepare("SELECT *
                                     FROM users
                                     WHERE email = :email AND password = :password");
     

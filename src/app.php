@@ -3,6 +3,9 @@
 use App\Controller\HomeController;
 use App\Controller\AuthController;
 use App\Controller\ArticleController;
+use App\Service\Database;
+
+Database::init();
 
     $url = $_SERVER['REQUEST_URI'];
 
@@ -24,15 +27,16 @@ use App\Controller\ArticleController;
         exit(0);
     }
 
-    if ($url === '/articles') { 
+    if ($url === '/articles') {
         $controller = new ArticleController();
         $controller->list();
         exit(0);
     }
 
-    if ($url === '/articles/details') { 
+    if (1 === preg_match('/^\/articles\/(?<id>\d+)$/', $url, $matches)) {
+    // if ($url === '/articles/details') {
         $controller = new ArticleController();
-        $controller->details();
+        $controller->details($matches["id"]);
         exit(0);
     }
 
@@ -42,15 +46,16 @@ use App\Controller\ArticleController;
         exit(0);
     }
 
-    if ($url === '/articles/edit') { 
+    if (1 === preg_match('/^\/articles\/(?<id>\d+)\/edit$/', $url, $matches)) {
+    // if ($url === '/articles/edit') { 
         $controller = new ArticleController();
-        $controller->edit();
+        $controller->edit($matches["id"]);
         exit(0);
     }
 
-    if ($url === '/articles/delete') { 
+    if (1 === preg_match('/^\/articles\/(?<id>\d+)\/delete$/', $url, $matches)) { 
         $controller = new ArticleController();
-        $controller->delete();
+        $controller->delete($matches["id"]);
         exit(0);
     }
 
@@ -58,4 +63,5 @@ use App\Controller\ArticleController;
         $_SESSION["message"] = "Merci et à bientôt !";
         $_SESSION["user_connected"] = false;
     }
-?>
+
+    echo 'url not found';
