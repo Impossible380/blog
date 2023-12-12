@@ -6,6 +6,12 @@ use App\Service\Database;
 
 class ArticleController {
     function list() {
+        if (!$_SESSION["user_connected"]) {
+            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
+            header("location: /login");
+            exit();
+        }
+        
         /* $query = $pdo->query("SELECT *, `users`.`firstname`, `users`.`lastname`
                                 FROM `articles`
                                 JOIN `users`
@@ -36,20 +42,23 @@ class ArticleController {
 
     function new() {
         if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = "Vous n'êtes pas connecté.";
+            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
             header("location: /login");
-            exit(0);
+            exit();
         }
         
         if (!empty($_POST)) {
             Database::get()->exec("INSERT INTO articles(title, content, author_id)
                                     VALUES(\"". $_POST["title"] ."\", \"". $_POST["content"] ."\", \"". $_SESSION["user"]["id"] ."\")");
                         
-            $_SESSION["message"] = "L'article qui a comme titre '". $_POST["title"] ."'
-            et comme contenu '". $_POST["content"] ."' a bien été ajouté.";
+            $_SESSION["message"] = "<p class='text-success'>L'article qui a comme titre
+                                    '". $_POST["title"] ."' et comme contenu
+                                    '". $_POST["content"] ."' a bien été ajouté.</p>";
+
+            $_SESSION["color_message"] = "success";
             
-            header("location: /articles");
-            exit(0);
+            header("location: /admin/articles");
+            exit();
         }
 
         require("../templates/new_form.php");
@@ -57,9 +66,9 @@ class ArticleController {
 
     function edit($id) {
         if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = "Vous n'êtes pas connecté.";
+            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
             header("location: /login");
-            exit(0);
+            exit();
         }
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
@@ -75,8 +84,10 @@ class ArticleController {
         $article = $query->fetch(\PDO::FETCH_ASSOC);
 
         if ($article["author_id"] !== $_SESSION["user"]["id"]) {
-            $_SESSION["message"] = "Vous n'êtes pas l'auteur de cet article.";
-            header("location: /articles");
+            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas l'auteur de cet
+                                    article.</p>";
+
+            header("location: /admin/articles");
             exit();
         }
 
@@ -86,12 +97,13 @@ class ArticleController {
                                         content = \"". $_POST["content"] ."\"
                                     WHERE id = \"". $id ."\"");
                         
-            $_SESSION["message"] = "L'article qui a comme id '". $id ."', comme titre
-            '". $_POST["title"] ."' (anciennement '". $article["title"] ."') et comme contenu
-            '". $_POST["content"] ."' (anciennement '". $article["content"] ."') a bien été
-            modifié.";
+            $_SESSION["message"] = "<p class='text-success'>L'article qui a comme id
+                                    '". $id ."', comme titre '". $_POST["title"] ."'
+                                    (anciennement '". $article["title"] ."') et comme
+                                    contenu '". $_POST["content"] ."' (anciennement
+                                    '". $article["content"] ."') a bien été modifié.</p>";
                         
-            header("location: /articles");
+            header("location: /admin/articles");
             exit();
         }
 
@@ -100,9 +112,9 @@ class ArticleController {
 
     function delete($id) {
         if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = "Vous n'êtes pas connecté.";
+            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
             header("location: /login");
-            exit(0);
+            exit();
         }
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
@@ -118,8 +130,10 @@ class ArticleController {
         $article = $query->fetch(\PDO::FETCH_ASSOC);
 
         if ($article["author_id"] !== $_SESSION["user"]["id"]) {
-            $_SESSION["message"] = "Vous n'êtes pas l'auteur de cet article.";
-            header("location: /articles");
+            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas l'auteur de cet
+                                    article.</p>";
+
+            header("location: /admin/articles");
             exit();
         }
 
@@ -129,12 +143,10 @@ class ArticleController {
                                 ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL;
                                 ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
         
-        $_SESSION["message"] = "L'article qui a comme id '". $id ."' a bien été
-        supprimé.";
+        $_SESSION["message"] = "<p class='text-success'>L'article qui a comme id
+                                '". $id ."' a bien été supprimé.</p>";
         
-        header("location: /articles");
+        header("location: /admin/articles");
         exit();
-
-        require("../templates/delete_form.php");
     }
 }

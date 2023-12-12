@@ -16,7 +16,7 @@
         </div>
     </form>
 
-    <?php $title = "Modifier un article"; ?>
+    <?php $title = "Modifier l'article"; ?>
     
 <?php $content = ob_get_clean(); ?>
 

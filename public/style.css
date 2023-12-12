@@ -1,4 +1,25 @@
-body {
+#logo {
+    width: 140px;
+    height: 80px;
+}
+
+main {
+    margin-inline: 5px;
+}
+
+.table_cell {
+    border: solid gray 2px;
+    padding: 10px;
+    gap: 5px;
+}
+
+.social-network {
+    width: 50px;
+    height: 50px;
+}
+
+
+/* body {
     font-family: Arial, Helvetica, sans-serif;
     gap: 50px;
     display: flex;
@@ -79,4 +100,4 @@ footer {
 footer img {
     width: 3%;
     height: 3%;
-}
+} */

@@ -1,7 +1,9 @@
 <?php ob_start(); ?>
 
+    <h1>Liste des articles</h1>
+
     <table>
-        <thead>
+        <thead class="text-center text-primary">
             <tr>
                 <th class="table_cell">id</th>
                 <th class="table_cell">title</th>
@@ -16,7 +18,7 @@
 
             <?php foreach($articles as $article) { ?>
                 <tr>
-                    <td class="table_cell">
+                    <td class="table_cell text-center">
                         <?php echo $article["id"]; ?>
                     </td>
                     <td class="table_cell">
@@ -27,7 +29,7 @@
                     <td class="table_cell">
                         <?php echo $article["content"]; ?>
                     </td>
-                    <td class="table_cell">
+                    <td class="table_cell text-center">
                         <?php echo $article["author_id"]; ?>
                     </td>
                     <td class="table_cell">
@@ -37,10 +39,10 @@
                         <?php echo $article["lastname"]; ?>
                     </td>
                     <td class="table_cell">
-                        <a href="/articles/<?php echo $article["id"]; ?>/edit">
+                        <a href="/admin/articles/<?php echo $article["id"]; ?>/edit">
                             Modifier
                         </a>
-                        <a href="/articles/<?php echo $article["id"]; ?>/delete">
+                        <a href="/admin/articles/<?php echo $article["id"]; ?>/delete">
                             Supprimer
                         </a>
                     </td>
@@ -50,7 +52,7 @@
         </tbody>
     </table>
 
-    <a href="/articles/new">Ajouter</a>
+    <a href="/admin/articles/new">Ajouter</a>
 
     <?php $title = "Liste des articles"; ?>
 

@@ -58,3 +58,23 @@ php -S localhost:8080 -t public
 /admin/users --> list des utilisateurs
 /admin/users/1/modify --> modification d'un utilisateur
 /admin/users/1/delete --> suppression d'un utilisateur
+
+# 09/12/2023
+Lien Figma : https://www.figma.com/file/Lx9BxEjPkpqCERcMb06WFE/Untitled?type=design&mode=design&t=xsAXJ96fVSAZSRXv-0
+
+# 11/12/2023
+## Pendant la session
+MVC = Modèle / Vue / Controller
+* Modèle = Modèle de donnée (toutes les requetes SQL)
+* Vue = Template HTML
+* Conroller = récupère les infos de l'url -> demande les données au Modèle -> demande d'afficher à la Vue
+C'est une façon d'écrire du code pour le web
+ça permet de séparer le code php des vues html
+
+## A faire
+Utiliser les alertes Bootstrap pour afficher les messages et faire en sorte que la couleur soit 
+* **danger** pour les erreurs 
+* **info** pour les message d'information (connection...)
+* **success** pour la réussite d'une modification, d'un ajout ou d'une suppression
+Créer la page contact
+

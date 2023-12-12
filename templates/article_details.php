@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-    <h1>Article détail</h1>
+    <h1>Détails de l'article</h1>
 
     <?php dump($article); ?>
 

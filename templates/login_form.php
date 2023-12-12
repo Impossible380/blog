@@ -1,14 +1,8 @@
 <?php ob_start(); ?>
 
+    <h1>Connexion</h1>
+
     <form action="" method="post" class="form-example">
-        <!-- <div class="form-example">
-            <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" required />
-        </div>
-        <div class="form-example">
-            <label for="lastname">Nom : </label>
-            <input type="text" name="lastname" id="lastname" required />
-        </div> -->
         <div class="form-example">
             <label for="email">Email : </label>
             <input type="email" name="email" id="email" required />
@@ -22,7 +16,7 @@
         </div>
     </form>
 
-    <?php $title = "Accueil"; ?>
+    <?php $title = "Connexion"; ?>
     
 <?php $content = ob_get_clean(); ?>
 

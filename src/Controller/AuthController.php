@@ -25,13 +25,13 @@ class AuthController {
             if ($user) {
                 $_SESSION["user"] = $user;
                 $_SESSION["user_connected"] = true;
-                $_SESSION["message"] = "Bonjour et bienvenue sur mon site.";
+                $_SESSION["message"] = "<p class='text-info'>Bonjour et bienvenue sur Parker Press.</p>";
     
                 header("location: /");
                 exit();
     
             } else {
-                $_SESSION["message"] = "Email ou mot de passe invalide";
+                $_SESSION["message"] = "<p class='text-danger'>Email ou mot de passe invalide</p>";
             }
         }
 
@@ -39,8 +39,10 @@ class AuthController {
     }
 
     function logout() {
-        $_SESSION["message"] = "Merci et à bientôt !";
-        $_SESSION["user_connected"] = false;
+        if ($_SESSION["user_connected"]) {
+            $_SESSION["message"] = "<p class='text-info'>Merci d'être venu sur Parker Press et à bientôt !</p>";
+            $_SESSION["user_connected"] = false;
+        }
 
         header("location: /");
     }
