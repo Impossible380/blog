@@ -4,19 +4,24 @@ namespace App\Controller;
 
 use App\Service\Database;
 
-class ArticleController {
-    function list() {
+class ArticleController
+{
+    function list()
+    {
         if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas connecté."
+            ];
             header("location: /login");
             exit();
         }
-        
+
         /* $query = $pdo->query("SELECT *, `users`.`firstname`, `users`.`lastname`
                                 FROM `articles`
                                 JOIN `users`
                                 ON `author_id` = `users`.`id`"); */
-                                
+
         $query = Database::get()->query("SELECT `articles`.`id`, `title`, `content`, `author_id`,
                                                 `users`.`firstname`, `users`.`lastname`
                                         FROM `articles`
@@ -24,39 +29,47 @@ class ArticleController {
                                         ON `author_id` = `users`.`id`");
 
         $articles = $query->fetchAll(\PDO::FETCH_ASSOC);
-        
+
         require("../templates/article_list.php");
     }
 
-    function details($id) {
+    function details($id)
+    {
         $query = Database::get()->prepare("SELECT *
                                             FROM articles
                                             WHERE id = :id");
 
         $query->execute([":id" => $id]);
-        
+
         $article = $query->fetch(\PDO::FETCH_ASSOC);
 
         require("../templates/article_details.php");
     }
 
-    function new() {
+    function new()
+    {
         if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas connecté."
+            ];
             header("location: /login");
             exit();
         }
-        
+
         if (!empty($_POST)) {
             Database::get()->exec("INSERT INTO articles(title, content, author_id)
-                                    VALUES(\"". $_POST["title"] ."\", \"". $_POST["content"] ."\", \"". $_SESSION["user"]["id"] ."\")");
-                        
-            $_SESSION["message"] = "<p class='text-success'>L'article qui a comme titre
-                                    '". $_POST["title"] ."' et comme contenu
-                                    '". $_POST["content"] ."' a bien été ajouté.</p>";
+                                    VALUES(\"" . $_POST["title"] . "\", \"" . $_POST["content"] . "\", \"" . $_SESSION["user"]["id"] . "\")");
+
+
+            $_SESSION["message"] = [
+                "type" => "success",
+                "text" => "L'article qui a comme titre '" . $_POST["title"] . "' et comme
+                            contenu '" . $_POST["content"] . "' a bien été ajouté."
+            ];
 
             $_SESSION["color_message"] = "success";
-            
+
             header("location: /admin/articles");
             exit();
         }
@@ -64,9 +77,13 @@ class ArticleController {
         require("../templates/new_article.php");
     }
 
-    function edit($id) {
+    function edit($id)
+    {
         if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas connecté."
+            ];
             header("location: /login");
             exit();
         }
@@ -80,12 +97,14 @@ class ArticleController {
         $query->execute([
             ":id" => $id,
         ]);
-        
+
         $article = $query->fetch(\PDO::FETCH_ASSOC);
 
         if ($article["author_id"] !== $_SESSION["user"]["id"]) {
-            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas l'auteur de cet
-                                    article.</p>";
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas l'auteur de cet article."
+            ];
 
             header("location: /admin/articles");
             exit();
@@ -93,16 +112,18 @@ class ArticleController {
 
         if (!empty($_POST)) {
             Database::get()->exec("UPDATE articles
-                                    SET title = \"". $_POST["title"] ."\",
-                                        content = \"". $_POST["content"] ."\"
-                                    WHERE id = \"". $id ."\"");
-                        
-            $_SESSION["message"] = "<p class='text-success'>L'article qui a comme id
-                                    '". $id ."', comme titre '". $_POST["title"] ."'
-                                    (anciennement '". $article["title"] ."') et comme
-                                    contenu '". $_POST["content"] ."' (anciennement
-                                    '". $article["content"] ."') a bien été modifié.</p>";
-                        
+                                    SET title = \"" . $_POST["title"] . "\",
+                                        content = \"" . $_POST["content"] . "\"
+                                    WHERE id = \"" . $id . "\"");
+
+            $_SESSION["message"] = [
+                "type" => "success",
+                "text" => "L'article qui a comme id '" . $id . "', comme titre '" . $_POST["title"] . "'
+                            (anciennement '" . $article["title"] . "') et comme contenu
+                            '" . $_POST["content"] . "' (anciennement '" . $article["content"] . "')
+                            a bien été modifié."
+            ];
+
             header("location: /admin/articles");
             exit();
         }
@@ -110,9 +131,14 @@ class ArticleController {
         require("../templates/edit_article.php");
     }
 
-    function delete($id) {
+    function delete($id)
+    {
         if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas connecté.</p>";
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas connecté."
+            ];
+            
             header("location: /login");
             exit();
         }
@@ -126,12 +152,14 @@ class ArticleController {
         $query->execute([
             ":id" => $id,
         ]);
-        
+
         $article = $query->fetch(\PDO::FETCH_ASSOC);
 
         if ($article["author_id"] !== $_SESSION["user"]["id"]) {
-            $_SESSION["message"] = "<p class='text-danger'>Vous n'êtes pas l'auteur de cet
-                                    article.</p>";
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas l'auteur de cet article."
+            ];
 
             header("location: /admin/articles");
             exit();
@@ -139,13 +167,15 @@ class ArticleController {
 
         Database::get()->exec("DELETE
                                 FROM articles
-                                WHERE id = \"". $id ."\";
+                                WHERE id = \"" . $id . "\";
                                 ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL;
                                 ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
-        
-        $_SESSION["message"] = "<p class='text-success'>L'article qui a comme id
-                                '". $id ."' a bien été supprimé.</p>";
-        
+
+        $_SESSION["message"] = [
+            "type" => "dangsuccesser",
+            "text" => "L'article qui a comme id '" . $id . "' a bien été supprimé."
+        ];
+
         header("location: /admin/articles");
         exit();
     }

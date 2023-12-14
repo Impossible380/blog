@@ -40,10 +40,10 @@
                         <?php echo $article["lastname"]; ?>
                     </td>
                     <td class="table_cell">
-                        <a href="/admin/articles/<?php echo $article["id"]; ?>/edit">
+                        <a href="/admin/articles/<?= $article["id"]; ?>/edit">
                             Modifier
                         </a>
-                        <a href="/admin/articles/<?php echo $article["id"]; ?>/delete">
+                        <a href="/admin/articles/<?= $article["id"]; ?>/delete">
                             Supprimer
                         </a>
                     </td>

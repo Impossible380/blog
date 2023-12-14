@@ -41,7 +41,7 @@
                         <a class="nav-link" aria-current="page" href="/login">Se connecter</a>
                     </li>
                     <li class="nav-item bg-dark">
-                        <a class="nav-link text-warning" aria-current="page" href="/users/new">Créer un compte</a>
+                        <a class="nav-link text-warning" aria-current="page" href="/register">Créer un compte</a>
                     </li>
 
                 <?php } ?>

@@ -67,7 +67,7 @@ Lien Figma : https://www.figma.com/file/Lx9BxEjPkpqCERcMb06WFE/Untitled?type=des
 MVC = Modèle / Vue / Controller
 * Modèle = Modèle de donnée (toutes les requetes SQL)
 * Vue = Template HTML
-* Conroller = récupère les infos de l'url -> demande les données au Modèle -> demande d'afficher à la Vue
+* Controller = récupère les infos de l'url -> demande les données au Modèle -> demande d'afficher à la Vue
 C'est une façon d'écrire du code pour le web
 ça permet de séparer le code php des vues html
 
@@ -78,3 +78,13 @@ Utiliser les alertes Bootstrap pour afficher les messages et faire en sorte que 
 * **success** pour la réussite d'une modification, d'un ajout ou d'une suppression
 Créer la page contact
 
+# 14/12/2023
+https://www.figma.com/file/Lx9BxEjPkpqCERcMb06WFE/Maquette-Blog?type=design&node-id=0-1&mode=design&t=wn8m1NQoMeNwnsBz-0
+## Pendant la session
+* Corriger la route register
+* Améliorer le système de messages
+* Requêtes préparées
+## Prochaine session
+* Concept Model
+## A faire
+Modifier toutes les requêtes pour que ce soit des requêtes préparées

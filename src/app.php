@@ -27,7 +27,13 @@ Database::init();
     }
     // Fin ContactController
 
-    // Début AuthController
+    // Début AuthController    
+    if ($url === '/register') {
+        $controller = new AuthController();
+        $controller->register();
+        exit();
+    }
+
     if ($url === '/login') { 
         $controller = new AuthController();
         $controller->login();
@@ -83,12 +89,6 @@ Database::init();
     if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)$/', $url, $matches)) {
         $controller = new UserController();
         $controller->parameters($matches["id"]);
-        exit();
-    }
-    
-    if ($url === '/users/new') {
-        $controller = new UserController();
-        $controller->new();
         exit();
     }
 
