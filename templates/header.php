@@ -28,16 +28,20 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end bg-dark">
                             <li><a class="dropdown-item text-warning" href="/admin/articles">Liste des blogs posts</a></li>
-                            <li><a class="dropdown-item text-warning" href="#">Paramètres d'utilisateur</a></li>
-                            <li><hr class="dropdown-divider border-warning"></li>
+                            <li><a class="dropdown-item text-warning" href="/admin/users">Liste des utilisateurs</a></li>
+                            <li><a class="dropdown-item text-warning" href="/admin/users/<?php echo $_SESSION["user"]["id"]; ?>">Paramètres d'utilisateur</a></li>
+                            <li><hr class="dropdown-divider border-warning" /></li>
                             <li><a class="dropdown-item text-warning" href="/logout">Se déconnecter</a></li>
                         </ul>
                     </li>
 
                 <?php } else { ?>
 
+                    <li class="nav-item border border-dark">
+                        <a class="nav-link" aria-current="page" href="/login">Se connecter</a>
+                    </li>
                     <li class="nav-item bg-dark">
-                        <a class="nav-link text-warning" aria-current="page" href="/login">Se connecter</a>
+                        <a class="nav-link text-warning" aria-current="page" href="/users/new">Créer un compte</a>
                     </li>
 
                 <?php } ?>

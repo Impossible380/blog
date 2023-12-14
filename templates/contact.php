@@ -20,10 +20,10 @@
             </div>
             <div class="form-example">
                 <label for="message">Message : </label>
-                <textarea name="story" id="story" rows="5" cols="33"></textarea>
+                <textarea name="message" id="message" rows="5" cols="33"></textarea>
             </div>
             <div class="form-example">
-                <input type="submit" value="Subscribe!" row="3" />
+                <input type="submit" value="Valider" row="3" />
             </div>
         </form>
 

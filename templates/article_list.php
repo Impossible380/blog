@@ -3,7 +3,7 @@
     <h1>Liste des articles</h1>
 
     <table>
-        <thead class="text-center text-primary">
+        <thead class="text-center">
             <tr>
                 <th class="table_cell">id</th>
                 <th class="table_cell">title</th>
@@ -14,6 +14,7 @@
                 <th class="table_cell">options</th>
             </tr>
         </thead>
+
         <tbody>
 
             <?php foreach($articles as $article) { ?>

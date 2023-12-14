@@ -8,12 +8,13 @@ class AuthController {
     function login() {
         if ($_SESSION["user_connected"]) {
             header("location: /");
+            exit();
         }
         
         if (!empty($_POST)) {
             $query = Database::get()->prepare("SELECT *
-                                    FROM users
-                                    WHERE email = :email AND password = :password");
+                                                FROM users
+                                                WHERE email = :email AND password = :password");
     
             $query->execute([
                 ":email" => $_POST["email"],
@@ -35,7 +36,7 @@ class AuthController {
             }
         }
 
-        require("../templates/login_form.php");
+        require("../templates/login.php");
     }
 
     function logout() {
@@ -45,5 +46,6 @@ class AuthController {
         }
 
         header("location: /");
+        exit();
     }
 }

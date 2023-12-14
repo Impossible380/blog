@@ -1,5 +1,19 @@
-<div class="container-fluid justify-content-end">
-    <img src="/images/logo_facebook.png" class="social-network">
-    <img src="/images/logo_twitter.png" class="social-network mx-2">
-    <img src="/images/logo_instagram.png" class="social-network"></div>
+<div class="container-fluid">
+    <ul class="list-inline text-end">
+        <li class="list-inline-item">
+            <a href="#" class="text-decoration-none">
+                <i class="bi bi-facebook fs-1"></i>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a href="#" class="text-decoration-none">
+                <i class="bi bi-twitter fs-1"></i>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a href="#" class="text-decoration-none">
+                <i class="bi bi-instagram fs-1"></i>
+            </a>
+        </li>
+    </ul>
 </div>
