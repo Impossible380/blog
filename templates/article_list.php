@@ -8,7 +8,6 @@
                 <th class="table_cell">id</th>
                 <th class="table_cell">title</th>
                 <th class="table_cell">content</th>
-                <th class="table_cell">author_id</th>
                 <th class="table_cell">firstname</th>
                 <th class="table_cell">lastname</th>
                 <th class="table_cell">options</th>
@@ -29,9 +28,6 @@
                     </td>
                     <td class="table_cell">
                         <?php echo $article["content"]; ?>
-                    </td>
-                    <td class="table_cell text-center">
-                        <?php echo $article["author_id"]; ?>
                     </td>
                     <td class="table_cell">
                         <?php echo $article["firstname"]; ?>

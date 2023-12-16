@@ -45,6 +45,12 @@ Database::init();
         $controller->logout();
         exit();
     }
+
+    if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)\/delete$/', $url, $matches)) { 
+        $controller = new AuthController();
+        $controller->farewell($matches["id"]); // "Farewell" signifie "Adieu" en anglais
+        exit();
+    }
     // Fin AuthController
 
     // Début ArticleController
@@ -95,12 +101,6 @@ Database::init();
     if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)\/edit$/', $url, $matches)) {
         $controller = new UserController();
         $controller->edit($matches["id"]);
-        exit();
-    }
-
-    if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)\/delete$/', $url, $matches)) { 
-        $controller = new UserController();
-        $controller->delete($matches["id"]);
         exit();
     }
     // Fin UserController
