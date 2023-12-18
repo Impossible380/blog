@@ -1,8 +1,8 @@
 <?php ob_start(); ?>
 
-    <h1>Nouvel article</h1>
+    <h1 class="text-center fw-bold mb-5">Nouvel article</h1>
 
-    <form action="" method="post" class="form-example">
+    <form action="/admin/articles/new" method="post" class="form-example">
         <div class="form-example">
             <label for="title">Titre : </label>
             <input type="text" name="title" id="title" required />

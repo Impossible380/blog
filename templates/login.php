@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-    <h1>Connexion</h1>
+    <h1 class="text-center fw-bold mb-5">Connexion</h1>
 
     <form action="" method="post" class="form-example">
         <div class="form-example">

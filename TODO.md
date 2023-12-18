@@ -88,3 +88,13 @@ https://www.figma.com/file/Lx9BxEjPkpqCERcMb06WFE/Maquette-Blog?type=design&node
 * Concept Model
 ## A faire
 Modifier toutes les requêtes pour que ce soit des requêtes préparées
+
+## 16/12/2023
+## Pendant la session
+* déroulement pas à pas de comment php traite une requête http (GET ou POST)
+# A faire
+* Mettre les urls dans le action des formulaires
+* Mettre les cards des articles dans la page d'accueil
+## Prochaines sessions
+* Bien expliquer le dossier public
+* Concept Model

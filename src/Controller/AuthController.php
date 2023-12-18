@@ -14,7 +14,7 @@ class AuthController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("INSERT INTO users(firstname, lastname, email, password)
+            $query = Database::get()->prepare("INSERT INTO `users`(`firstname`, `lastname`, `email`, `password`)
                                                 VALUES(:firstname, :lastname, :email, :password)");
             $query->execute([
                 ":firstname" => $_POST['firstname'],
@@ -23,7 +23,12 @@ class AuthController
                 ":password" => $_POST['password'],
             ]);
 
-            $query = Database::get()->prepare("SELECT * FROM users WHERE email = :email");
+            $query = Database::get()->prepare("SELECT
+                                                    *
+                                                FROM
+                                                    `users`
+                                                WHERE
+                                                    `email` = :email");
 
             $query->execute([
                 ":email" => $_POST['email'],
@@ -54,9 +59,12 @@ class AuthController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("SELECT *
-                                                FROM users
-                                                WHERE email = :email AND password = :password");
+            $query = Database::get()->prepare("SELECT
+                                                    *
+                                                FROM
+                                                    `users`
+                                                WHERE
+                                                    `email` = :email AND `password` = :password");
 
             $query->execute([
                 ":email" => $_POST["email"],
@@ -117,9 +125,15 @@ class AuthController
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT `users`.`id`, `firstname`, `lastname`, `email`
-                                            FROM `users`
-                                            WHERE `id` = :id");
+        $query = Database::get()->prepare("SELECT
+                                                `users`.`id`,
+                                                `firstname`,
+                                                `lastname`,
+                                                `email`
+                                            FROM
+                                                `users`
+                                            WHERE
+                                                `id` = :id");
 
         $query->execute([
             ":id" => $id,
@@ -138,10 +152,14 @@ class AuthController
         }
 
         $query = Database::get()->prepare("DELETE
-                                            FROM `users`
-                                            WHERE `id` = :id;
-                                            ALTER TABLE `users` CHANGE `id` `id` INT(11) NOT NULL;
-                                            ALTER TABLE `users` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
+                                            FROM
+                                                `users`
+                                            WHERE
+                                                `id` = :id;
+                                            ALTER TABLE
+                                                `users` CHANGE `id` `id` INT(11) NOT NULL;
+                                            ALTER TABLE
+                                                `users` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
 
         $query->execute([
             ":id" => $id
@@ -152,7 +170,7 @@ class AuthController
         if ($_SESSION["user_connected"]) {
             $_SESSION["message"] = [
                 "type" => "info",
-                "text" => "Merci d'être venu sur Parker Press, et bonne continuation !"
+                "text" => "Merci d'être venu sur Parker Press et bonne continuation !"
             ];
 
             $_SESSION["user_connected"] = false;

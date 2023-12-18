@@ -18,16 +18,15 @@ class ArticleController
             exit();
         }
 
-        /* $query = $pdo->query("SELECT *, `users`.`firstname`, `users`.`lastname`
-                                FROM `articles`
-                                JOIN `users`
-                                ON `author_id` = `users`.`id`"); */
-
-        $query = Database::get()->query("SELECT `articles`.`id`, `title`, `content`,
-                                                `users`.`firstname`, `users`.`lastname`
-                                            FROM `articles`
-                                            JOIN `users`
-                                            ON `author_id` = `users`.`id`");
+        $query = Database::get()->query("SELECT
+                                            `articles`.`id`,
+                                            `title`,
+                                            `content`,
+                                            `users`.`firstname`,
+                                            `users`.`lastname`
+                                        FROM
+                                            `articles`
+                                        JOIN `users` ON `author_id` = `users`.`id`");
 
         $articles = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -61,7 +60,7 @@ class ArticleController
 
         if (!empty($_POST)) {
             $query = Database::get()->prepare("INSERT INTO articles(title, content, author_id)
-                                    VALUES(:title, :content, :author_id)");
+                                                VALUES(:title, :content, :author_id)");
 
             $query->execute([
                 ":title" => $_POST["title"],
@@ -101,9 +100,12 @@ class ArticleController
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT *
-                                            FROM articles
-                                            WHERE id = :id");
+        $query = Database::get()->prepare("SELECT
+                                                *
+                                            FROM
+                                                articles
+                                            WHERE
+                                                id = :id");
 
         $query->execute([
             ":id" => $id,
@@ -122,10 +124,13 @@ class ArticleController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("UPDATE articles
-                                                SET title = :title,
+            $query = Database::get()->prepare("UPDATE
+                                                    articles
+                                                SET
+                                                    title = :title,
                                                     content = :content
-                                                WHERE id = :id");
+                                                WHERE
+                                                    id = :id");
 
             $query->execute([
                 ":id" => $id,
@@ -165,9 +170,12 @@ class ArticleController
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT *
-                                            FROM articles
-                                            WHERE id = :id");
+        $query = Database::get()->prepare("SELECT
+                                                *
+                                            FROM
+                                                articles
+                                            WHERE
+                                                id = :id");
 
         $query->execute([
             ":id" => $id,
@@ -186,10 +194,14 @@ class ArticleController
         }
 
         $query = Database::get()->prepare("DELETE
-                                            FROM articles
-                                            WHERE id = :id;
-                                            ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL;
-                                            ALTER TABLE `articles` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
+                                            FROM
+                                                `articles`
+                                            WHERE
+                                                `id` = :id;
+                                            ALTER TABLE
+                                                `articles` CHANGE `id` `id` INT(11) NOT NULL;
+                                            ALTER TABLE
+                                                `articles` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
 
         $query->execute([
             ":id" => $id,

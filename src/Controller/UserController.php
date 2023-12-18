@@ -18,8 +18,10 @@ class UserController
             exit();
         }
 
-        $query = Database::get()->query("SELECT `users`.`id`, `firstname`, `lastname`, `email`
-                                            FROM `users`");
+        $query = Database::get()->query("SELECT
+                                            *
+                                        FROM
+                                            `users`");
 
         $users = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -38,9 +40,14 @@ class UserController
             exit();
         }
 
-        $query = Database::get()->prepare("SELECT `users`.`id`, `firstname`, `lastname`
-                                            FROM `users`
-                                            WHERE `id` = :id");
+        $query = Database::get()->prepare("SELECT
+                                                `users`.`id`,
+                                                `firstname`,
+                                                `lastname`
+                                            FROM
+                                                `users`
+                                            WHERE
+                                                `id` = :id");
 
         $query->execute([":id" => $id]);
 
@@ -71,11 +78,14 @@ class UserController
             exit();
         }
 
-        /// récuperer l'article dans la bdd grace à l'id $_GET['id']
+        /// récuperer le user dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT `users`.`id`, `firstname`, `lastname`, `email`
-                                            FROM `users`
-                                            WHERE `id` = :id");
+        $query = Database::get()->prepare("SELECT
+                                                *
+                                            FROM
+                                                `users`
+                                            WHERE
+                                                `id` = :id");
 
         $query->execute([
             ":id" => $id,
@@ -94,12 +104,15 @@ class UserController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("UPDATE `users`
-                                                SET `firstname` = :firstname,
+            $query = Database::get()->prepare("UPDATE
+                                                    `users`
+                                                SET
+                                                    `firstname` = :firstname,
                                                     `lastname` = :lastname,
                                                     `email` = :email,
                                                     `password` = :password
-                                                WHERE `id` = :id");
+                                                WHERE
+                                                    `id` = :id");
 
             $query->execute([
                 ":id" => $id,
@@ -109,7 +122,12 @@ class UserController
                 ":password" => $_POST["password"],
             ]);
 
-            $query = Database::get()->prepare("SELECT * FROM users WHERE email = :email");
+            $query = Database::get()->prepare("SELECT
+                                                    *
+                                                FROM
+                                                    users
+                                                WHERE
+                                                    email = :email");
 
             $query->execute([
                 ":email" => $_POST['email'],

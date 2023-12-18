@@ -1,8 +1,8 @@
 <?php ob_start(); ?>
 
-    <h1>Nouveau compte</h1>
+    <h1 class="text-center fw-bold mb-5">Nouveau compte</h1>
 
-    <form action="" method="post" class="form-example">
+    <form action="/register" method="post" class="form-example">
         <div class="form-example">
             <label for="firstname">Prénom : </label>
             <input type="text" name="firstname" id="firstname" required />

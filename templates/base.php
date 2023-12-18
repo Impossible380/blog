@@ -22,7 +22,7 @@
     <!-- Fin HEADER -->
 
     <!-- Début MAIN -->
-    <main class="my-5">
+    <main class="py-5">
 
         <?php if (!empty($_SESSION["message"])) { ?>
             <div class="alert alert-<?= $_SESSION["message"]["type"] ?>" role="alert">

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid justify-content-center">
+    <div class="container">
         
         <img src="/images/logo.jpg" id="logo">
 
@@ -17,6 +17,11 @@
                 <li class="nav-item mb-2 mb-lg-0 me-lg-3">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
+            </ul>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
 
                 <?php if ($_SESSION["user_connected"]) { ?>
 
@@ -27,7 +32,7 @@
                             
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end bg-dark">
-                            <li><a class="dropdown-item text-warning" href="/admin/articles">Liste des blogs posts</a></li>
+                            <li><a class="dropdown-item text-warning" href="/admin/articles">Liste des articles</a></li>
                             <li><a class="dropdown-item text-warning" href="/admin/users">Liste des utilisateurs</a></li>
                             <li><a class="dropdown-item text-warning" href="/admin/users/<?php echo $_SESSION["user"]["id"]; ?>">Paramètres d'utilisateur</a></li>
                             <li><hr class="dropdown-divider border-warning" /></li>
