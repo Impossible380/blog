@@ -98,3 +98,15 @@ Modifier toutes les requêtes pour que ce soit des requêtes préparées
 ## Prochaines sessions
 * Bien expliquer le dossier public
 * Concept Model
+
+## 18/12/2023
+## Pendant la session
+* Concept Model
+# A faire
+* Créer l'entity Article
+* Créer le repository ArcticleRepository
+* Modifier le ArticleController pour utiliser le ArticleRepository
+* Attention à bien modifier les templates.
+## Prochaines sessions
+* Bien expliquer le dossier public
+* Encoder le password

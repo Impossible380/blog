@@ -28,13 +28,13 @@
                     <li class="nav-item dropdown bg-dark">
                         <a class="nav-link dropdown-toggle text-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                            <?php echo "". $_SESSION["user"]["firstname"] ."  ". $_SESSION["user"]["lastname"] .""; ?>
+                            <?php echo "". $_SESSION["user"]->firstname ."  ". $_SESSION["user"]->lastname .""; ?>
                             
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end bg-dark">
                             <li><a class="dropdown-item text-warning" href="/admin/articles">Liste des articles</a></li>
                             <li><a class="dropdown-item text-warning" href="/admin/users">Liste des utilisateurs</a></li>
-                            <li><a class="dropdown-item text-warning" href="/admin/users/<?php echo $_SESSION["user"]["id"]; ?>">Paramètres d'utilisateur</a></li>
+                            <li><a class="dropdown-item text-warning" href="/admin/users/<?php echo $_SESSION["user"]->id; ?>">Paramètres d'utilisateur</a></li>
                             <li><hr class="dropdown-divider border-warning" /></li>
                             <li><a class="dropdown-item text-warning" href="/logout">Se déconnecter</a></li>
                         </ul>

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\User;
+use App\Model\Repository\UserRepository;
 use App\Service\Database;
 
 class AuthController
@@ -14,31 +16,17 @@ class AuthController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("INSERT INTO `users`(`firstname`, `lastname`, `email`, `password`)
-                                                VALUES(:firstname, :lastname, :email, :password)");
-            $query->execute([
-                ":firstname" => $_POST['firstname'],
-                ":lastname" => $_POST['lastname'],
-                ":email" => $_POST['email'],
-                ":password" => $_POST['password'],
-            ]);
+            $user = new User();
+            $user->firstname = $_POST['firstname'];
+            $user->lastname = $_POST['lastname'];
+            $user->email = $_POST['email'];
+            $user->password = $_POST['password'];
 
-            $query = Database::get()->prepare("SELECT
-                                                    *
-                                                FROM
-                                                    `users`
-                                                WHERE
-                                                    `email` = :email");
-
-            $query->execute([
-                ":email" => $_POST['email'],
-            ]);
-
-            $user = $query->fetch(\PDO::FETCH_ASSOC);
+            $user = UserRepository::insert($user);
 
             $_SESSION["user"] = $user;
             $_SESSION["user_connected"] = true;
-            
+
             $_SESSION["message"] = [
                 "type" => "info",
                 "text" => "Bonjour et bienvenue sur Parker Press pour votre première."
@@ -59,38 +47,28 @@ class AuthController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("SELECT
-                                                    *
-                                                FROM
-                                                    `users`
-                                                WHERE
-                                                    `email` = :email AND `password` = :password");
+            $user = UserRepository::findOneByEmail($_POST["email"]);
 
-            $query->execute([
-                ":email" => $_POST["email"],
-                ":password" => $_POST["password"]
-            ]);
-
-            $user = $query->fetch(\PDO::FETCH_ASSOC);
-
-            if ($user) {
-                $_SESSION["user"] = $user;
-                $_SESSION["user_connected"] = true;
-
-                $_SESSION["message"] = [
-                    "type" => "info",
-                    "text" => "Bonjour et bienvenue sur Parker Press pour votre retour."
-                ];
-
-                header("location: /");
-                exit();
-
-            } else {
+            if (!$user || $user->password !== $_POST["password"]) {
                 $_SESSION["message"] = [
                     "type" => "danger",
                     "text" => "Email ou mot de passe invalide."
                 ];
+
+                require("../templates/login.php");
+                return;
             }
+
+            $_SESSION["user"] = $user;
+            $_SESSION["user_connected"] = true;
+
+            $_SESSION["message"] = [
+                "type" => "info",
+                "text" => "Bonjour et bienvenue sur Parker Press pour votre retour."
+            ];
+
+            header("location: /");
+            exit();
         }
 
         require("../templates/login.php");
@@ -105,6 +83,7 @@ class AuthController
             ];
 
             $_SESSION["user_connected"] = false;
+            $_SESSION["user"] = null;
         }
 
         header("location: /");
@@ -125,23 +104,9 @@ class AuthController
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT
-                                                `users`.`id`,
-                                                `firstname`,
-                                                `lastname`,
-                                                `email`
-                                            FROM
-                                                `users`
-                                            WHERE
-                                                `id` = :id");
+        $user = UserRepository::findOneById($id);
 
-        $query->execute([
-            ":id" => $id,
-        ]);
-
-        $user = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if ($user["id"] !== $_SESSION["user"]["id"]) {
+        if ($user->id !== $_SESSION["user"]->id) {
             $_SESSION["message"] = [
                 "type" => "danger",
                 "text" => "Vous n'êtes pas autorisé à modifier ou à supprimer les informations des autres comptes."
@@ -151,21 +116,7 @@ class AuthController
             exit();
         }
 
-        $query = Database::get()->prepare("DELETE
-                                            FROM
-                                                `users`
-                                            WHERE
-                                                `id` = :id;
-                                            ALTER TABLE
-                                                `users` CHANGE `id` `id` INT(11) NOT NULL;
-                                            ALTER TABLE
-                                                `users` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
-
-        $query->execute([
-            ":id" => $id
-        ]);
-
-        $user = $query->fetch(\PDO::FETCH_ASSOC);
+        UserRepository::delete($id);
 
         if ($_SESSION["user_connected"]) {
             $_SESSION["message"] = [
@@ -174,6 +125,7 @@ class AuthController
             ];
 
             $_SESSION["user_connected"] = false;
+            $_SESSION["user"] = null;
         }
 
         header("location: /");

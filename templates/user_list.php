@@ -17,16 +17,16 @@
             <?php foreach($users as $user) { ?>
                 <tr>
                     <td class="border-2 border-secondary p-2 text-center">
-                        <?php echo $user["id"]; ?>
+                        <?php echo $user->id; ?>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <?php echo $user["firstname"]; ?>
+                        <?php echo $user->firstname; ?>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <?php echo $user["lastname"]; ?>
+                        <?php echo $user->lastname; ?>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <?php echo $user["email"]; ?>
+                        <?php echo $user->email; ?>
                     </td>
                 </tr>
             <?php } ?>

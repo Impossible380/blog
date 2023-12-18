@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\User;
+use App\Model\Repository\UserRepository;
 use App\Service\Database;
 
 class UserController
@@ -18,12 +20,8 @@ class UserController
             exit();
         }
 
-        $query = Database::get()->query("SELECT
-                                            *
-                                        FROM
-                                            `users`");
 
-        $users = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $users = UserRepository::findAll();
 
         require("../templates/user_list.php");
     }
@@ -40,20 +38,9 @@ class UserController
             exit();
         }
 
-        $query = Database::get()->prepare("SELECT
-                                                `users`.`id`,
-                                                `firstname`,
-                                                `lastname`
-                                            FROM
-                                                `users`
-                                            WHERE
-                                                `id` = :id");
+        $user = UserRepository::findOneById($id);
 
-        $query->execute([":id" => $id]);
-
-        $user = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if ($user["id"] !== $_SESSION["user"]["id"]) {
+        if ($user->id !== $_SESSION["user"]->id) {
             $_SESSION["message"] = [
                 "type" => "danger",
                 "text" => "Vous n'êtes pas connecté sur ce compte."
@@ -80,20 +67,9 @@ class UserController
 
         /// récuperer le user dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT
-                                                *
-                                            FROM
-                                                `users`
-                                            WHERE
-                                                `id` = :id");
+        $user = UserRepository::findOneById($id);
 
-        $query->execute([
-            ":id" => $id,
-        ]);
-
-        $user = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if ($user["id"] !== $_SESSION["user"]["id"]) {
+        if ($user->id !== $_SESSION["user"]->id) {
             $_SESSION["message"] = [
                 "type" => "danger",
                 "text" => "Vous n'êtes pas autorisé à modifier ou à supprimer les informations des autres comptes."
@@ -104,47 +80,27 @@ class UserController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("UPDATE
-                                                    `users`
-                                                SET
-                                                    `firstname` = :firstname,
-                                                    `lastname` = :lastname,
-                                                    `email` = :email,
-                                                    `password` = :password
-                                                WHERE
-                                                    `id` = :id");
+            $ancient_user = $user;
 
-            $query->execute([
-                ":id" => $id,
-                ":firstname" => $_POST["firstname"],
-                ":lastname" => $_POST["lastname"],
-                ":email" => $_POST["email"],
-                ":password" => $_POST["password"],
-            ]);
+            $user = new User();
+            $user->id = $id;
+            $user->firstname = $_POST["firstname"];
+            $user->lastname = $_POST["lastname"];
+            $user->email = $_POST["email"];
+            $user->password = $_POST["password"];
 
-            $query = Database::get()->prepare("SELECT
-                                                    *
-                                                FROM
-                                                    users
-                                                WHERE
-                                                    email = :email");
-
-            $query->execute([
-                ":email" => $_POST['email'],
-            ]);
+            UserRepository::update($user);
 
             $_SESSION["message"] = [
                 "type" => "success",
                 "text" => "Le compte qui a comme id '" . $id . "', comme prénom
-                            '" . $_POST["firstname"] . "' (anciennement
-                            '" . $user["firstname"] . "') et comme nom
-                            '" . $_POST["lastname"] . "' (anciennement
-                            '" . $user["lastname"] . "') a bien été modifié."
+                            '" . $user->firstname . "' (anciennement
+                            '" . $ancient_user->firstname . "') et comme nom
+                            '" . $user->lastname . "' (anciennement
+                            '" . $ancient_user->lastname . "') a bien été modifié."
             ];
-    
-            $user = $query->fetch(\PDO::FETCH_ASSOC);
 
-            $_SESSION["user"] = $user;
+            $_SESSION['user'] = $user;
 
             header("location: /admin/users");
             exit();

@@ -2,22 +2,22 @@
 
     <h1 class="text-center fw-bold mb-5">Modifier le compte</h1>
 
-    <form action="/admin/users/<?= $user['id'] ?>/edit" method="post" class="form-example">
+    <form action="/admin/users/<?= $user->id ?>/edit" method="post" class="form-example">
         <div class="form-example">
             <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" value="<?= $user['firstname'] ?>" required />
+            <input type="text" name="firstname" id="firstname" value="<?= $user->firstname ?>" required />
         </div>
         <div class="form-example">
             <label for="lastname">Nom : </label>
-            <input type="text" name="lastname" id="lastname" value="<?= $user['lastname'] ?>" required />
+            <input type="text" name="lastname" id="lastname" value="<?= $user->lastname ?>" required />
         </div>
         <div class="form-example">
             <label for="email">Email : </label>
-            <input type="email" name="email" id="email" value="<?= $user['email'] ?>" required />
+            <input type="email" name="email" id="email" value="<?= $user->email ?>" required />
         </div>
         <div class="form-example">
             <label for="email">Mot de passe : </label>
-            <input type="password" name="password" id="password" value="<?= $user['password'] ?>" required />
+            <input type="password" name="password" id="password" value="<?= $user->password ?>" required />
         </div>
         <div class="form-example">
             <input type="submit" value="Valider" row="3" />
