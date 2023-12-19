@@ -19,27 +19,27 @@
             <?php foreach($articles as $article) { ?>
                 <tr>
                     <td class="border-2 border-secondary p-2 text-center">
-                        <?php echo $article["id"]; ?>
+                        <?= $article->id; ?>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <a href="/articles/<?php echo $article["id"]; ?>">
-                            <?php echo $article["title"]; ?>
+                        <a href="/articles/<?= $article->id; ?>">
+                            <?= $article->title; ?>
                         </a>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <?php echo $article["content"]; ?>
+                        <?= $article->content; ?>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <?php echo $article["firstname"]; ?>
+                        <?= $user->firstname; ?>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <?php echo $article["lastname"]; ?>
+                        <?= $user->lastname; ?>
                     </td>
                     <td class="border-2 border-secondary p-2">
-                        <a href="/admin/articles/<?= $article["id"]; ?>/edit">
+                        <a href="/admin/articles/<?= $article->id; ?>/update">
                             Modifier
                         </a>
-                        <a href="/admin/articles/<?= $article["id"]; ?>/delete">
+                        <a href="/admin/articles/<?= $article->id; ?>/delete">
                             Supprimer
                         </a>
                     </td>
@@ -49,7 +49,7 @@
         </tbody>
     </table>
 
-    <a href="/admin/articles/new">Ajouter</a>
+    <a href="/admin/articles/insert">Ajouter</a>
 
     <?php $title = "Liste des articles"; ?>
 

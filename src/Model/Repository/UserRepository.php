@@ -80,7 +80,7 @@ class UserRepository
             ":firstname" => $user->firstname,
             ":lastname" => $user->lastname,
             ":email" => $user->email,
-            ":password" => $user->password,
+            ":password" => $user->password
         ]);
 
         return UserRepository::findOneByEmail($user->email);
@@ -103,7 +103,7 @@ class UserRepository
             ":firstname" => $user->firstname,
             ":lastname" => $user->lastname,
             ":email" => $user->email,
-            ":password" => $user->password,
+            ":password" => $user->password
         ]);
     }
 

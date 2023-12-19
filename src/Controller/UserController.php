@@ -20,7 +20,6 @@ class UserController
             exit();
         }
 
-
         $users = UserRepository::findAll();
 
         require("../templates/user_list.php");
@@ -53,7 +52,7 @@ class UserController
         require("../templates/user_parameters.php");
     }
 
-    function edit($id)
+    function update($id)
     {
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = [
@@ -106,6 +105,6 @@ class UserController
             exit();
         }
 
-        require("../templates/edit_user.php");
+        require("../templates/user_update.php");
     }
 }

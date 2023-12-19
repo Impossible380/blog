@@ -66,15 +66,15 @@ Database::init();
         exit();
     }
 
-    if ($url === '/admin/articles/new') {
+    if ($url === '/admin/articles/insert') {
         $controller = new ArticleController();
-        $controller->new();
+        $controller->insert();
         exit();
     }
 
-    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/edit$/', $url, $matches)) {
+    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/update$/', $url, $matches)) {
         $controller = new ArticleController();
-        $controller->edit($matches["id"]);
+        $controller->update($matches["id"]);
         exit();
     }
 
@@ -98,16 +98,11 @@ Database::init();
         exit();
     }
 
-    if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)\/edit$/', $url, $matches)) {
+    if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)\/update$/', $url, $matches)) {
         $controller = new UserController();
-        $controller->edit($matches["id"]);
+        $controller->update($matches["id"]);
         exit();
     }
     // Fin UserController
-
-    /* if (isset($_GET["user_action"]) && $_GET["user_action"] === "logout") {
-        $_SESSION["message"] = "Merci et à bientôt !";
-        $_SESSION["user_connected"] = false;
-    } */
 
     echo 'url not found';

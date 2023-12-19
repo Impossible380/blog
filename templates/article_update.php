@@ -1,22 +1,22 @@
 <?php ob_start(); ?>
 
-    <h1 class="text-center fw-bold mb-5">Nouvel article</h1>
+    <h1 class="text-center fw-bold mb-5">Modifier l'article</h1>
 
-    <form action="/admin/articles/new" method="post" class="form-example">
+    <form action="/admin/articles/<?= $article['id'] ?>/update" method="post" class="form-example">
         <div class="form-example">
             <label for="title">Titre : </label>
-            <input type="text" name="title" id="title" required />
+            <input type="text" name="title" id="title" value="<?= $article['title'] ?>" required />
         </div>
         <div class="form-example">
             <label for="content">Contenu : </label>
-            <textarea name="content" id="content" rows="5" cols="33" required></textarea>
+            <textarea name="content" id="content" rows="5" cols="33" required><?= $article['content'] ?></textarea>
         </div>
         <div class="form-example">
             <input type="submit" value="Valider" row="3" />
         </div>
     </form>
 
-    <?php $title = "Nouvel article"; ?>
+    <?php $title = "Modifier l'article"; ?>
     
 <?php $content = ob_get_clean(); ?>
 

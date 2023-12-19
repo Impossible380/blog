@@ -2,7 +2,7 @@
 
     <h1 class="text-center fw-bold mb-5">Modifier le compte</h1>
 
-    <form action="/admin/users/<?= $user->id ?>/edit" method="post" class="form-example">
+    <form action="/admin/users/<?= $user->id ?>/update" method="post" class="form-example">
         <div class="form-example">
             <label for="firstname">Prénom : </label>
             <input type="text" name="firstname" id="firstname" value="<?= $user->firstname ?>" required />

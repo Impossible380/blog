@@ -104,7 +104,7 @@ Modifier toutes les requêtes pour que ce soit des requêtes préparées
 * Concept Model
 # A faire
 * Créer l'entity Article
-* Créer le repository ArcticleRepository
+* Créer le repository ArticleRepository
 * Modifier le ArticleController pour utiliser le ArticleRepository
 * Attention à bien modifier les templates.
 ## Prochaines sessions

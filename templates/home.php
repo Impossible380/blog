@@ -28,13 +28,13 @@
                             <h1 class="text-center fw-bold"></h1> -->
 
                             <div class="card-body">
-                                <h4 class="card-title text-center mb-4"><?= $article['title'] ?></h4>
-                                <p class="card-text"><?= $article['content'] ?></p>
-                                <a href="/articles/<?php echo $article["id"]; ?>" class="btn btn-primary">Détails</a>
+                                <h4 class="card-title text-center mb-4"><?= $article->title; ?></h4>
+                                <p class="card-text"><?= $article->content; ?></p>
+                                <a href="/articles/<?= $article->id; ?>" class="btn btn-primary">Détails</a>
                             </div>
 
                             <div class="card-footer">
-                                <small class="text-body-secondary">Last updated 3 mins ago</small>
+                                <small class="text-body-secondary">Dernière mise à jour : inconnue</small>
                             </div>
 
                         </div>

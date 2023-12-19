@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\Article;
+use App\Model\Entity\User;
+use App\Model\Repository\ArticleRepository;
+use App\Model\Repository\UserRepository;
 use App\Service\Database;
 
 class ArticleController
@@ -18,35 +22,20 @@ class ArticleController
             exit();
         }
 
-        $query = Database::get()->query("SELECT
-                                            `articles`.`id`,
-                                            `title`,
-                                            `content`,
-                                            `users`.`firstname`,
-                                            `users`.`lastname`
-                                        FROM
-                                            `articles`
-                                        JOIN `users` ON `author_id` = `users`.`id`");
-
-        $articles = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $articles = ArticleRepository::findAll();
+        $users = UserRepository::findAll();
 
         require("../templates/article_list.php");
     }
 
     function details($id)
     {
-        $query = Database::get()->prepare("SELECT *
-                                            FROM articles
-                                            WHERE id = :id");
-
-        $query->execute([":id" => $id]);
-
-        $article = $query->fetch(\PDO::FETCH_ASSOC);
+        $article = ArticleRepository::findOneById($id);
 
         require("../templates/article_details.php");
     }
 
-    function new()
+    function insert()
     {
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = [
@@ -59,22 +48,17 @@ class ArticleController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("INSERT INTO articles(title, content, author_id)
-                                                VALUES(:title, :content, :author_id)");
+            $article = new Article();
+            $article->content = $_POST['title'];
+            $article->title = $_POST['content'];
+            $article->author_id = $_SESSION['user']->id;
 
-            $query->execute([
-                ":title" => $_POST["title"],
-                ":content" => $_POST["content"],
-                ":author_id" => $_SESSION["user"]["id"]
-            ]);
-
-            $article = $query->fetch(\PDO::FETCH_ASSOC);
-
+            ArticleRepository::insert($article);
 
             $_SESSION["message"] = [
                 "type" => "success",
-                "text" => "L'article qui a comme titre '" . $_POST["title"] . "' et comme
-                            contenu '" . $_POST["content"] . "' a bien été ajouté."
+                "text" => "L'article qui a comme titre '" . $article->title . "' et comme
+                            contenu '" . $article->content . "' a bien été ajouté."
             ];
 
             $_SESSION["color_message"] = "success";
@@ -86,7 +70,7 @@ class ArticleController
         require("../templates/new_article.php");
     }
 
-    function edit($id)
+    function update($id)
     {
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = [
@@ -100,20 +84,9 @@ class ArticleController
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT
-                                                *
-                                            FROM
-                                                articles
-                                            WHERE
-                                                id = :id");
+        $article = ArticleRepository::findOneById($id);
 
-        $query->execute([
-            ":id" => $id,
-        ]);
-
-        $article = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if ($article["author_id"] !== $_SESSION["user"]["id"]) {
+        if ($article->author_id !== $_SESSION["user"]->id) {
             $_SESSION["message"] = [
                 "type" => "danger",
                 "text" => "Vous n'êtes pas l'auteur de cet article."
@@ -124,30 +97,20 @@ class ArticleController
         }
 
         if (!empty($_POST)) {
-            $query = Database::get()->prepare("UPDATE
-                                                    articles
-                                                SET
-                                                    title = :title,
-                                                    content = :content
-                                                WHERE
-                                                    id = :id");
+            $ancient_article = $article;
 
-            $query->execute([
-                ":id" => $id,
-                ":title" => $_POST["title"],
-                ":content" => $_POST["content"]
-            ]);
+            $article = new Article();
+            $article->title = $_POST["title"];
+            $article->content = $_POST["content"];
 
             $_SESSION["message"] = [
                 "type" => "success",
                 "text" => "L'article qui a comme id '" . $id . "', comme titre
-                            '" . $_POST["title"] . "' (anciennement
-                            '" . $article["title"] . "') et comme contenu
-                            '" . $_POST["content"] . "' (anciennement
-                            '" . $article["content"] . "') a bien été modifié."
+                            '" . $article->title . "' (anciennement
+                            '" . $ancient_article->title . "') et comme contenu
+                            '" . $article->content . "' (anciennement
+                            '" . $ancient_article->content . "') a bien été modifié."
             ];
-    
-            $article = $query->fetch(\PDO::FETCH_ASSOC);
 
             header("location: /admin/articles");
             exit();
@@ -170,20 +133,9 @@ class ArticleController
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
-        $query = Database::get()->prepare("SELECT
-                                                *
-                                            FROM
-                                                articles
-                                            WHERE
-                                                id = :id");
+        $article = ArticleRepository::findOneById($id);
 
-        $query->execute([
-            ":id" => $id,
-        ]);
-
-        $article = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if ($article["author_id"] !== $_SESSION["user"]["id"]) {
+        if ($article->author_id !== $_SESSION["user"]->id) {
             $_SESSION["message"] = [
                 "type" => "danger",
                 "text" => "Vous n'êtes pas l'auteur de cet article."
@@ -193,21 +145,7 @@ class ArticleController
             exit();
         }
 
-        $query = Database::get()->prepare("DELETE
-                                            FROM
-                                                `articles`
-                                            WHERE
-                                                `id` = :id;
-                                            ALTER TABLE
-                                                `articles` CHANGE `id` `id` INT(11) NOT NULL;
-                                            ALTER TABLE
-                                                `articles` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT");
-
-        $query->execute([
-            ":id" => $id,
-        ]);
-
-        $article = $query->fetch(\PDO::FETCH_ASSOC);
+        ArticleRepository::delete($id);
         
         $_SESSION["message"] = [
             "type" => "success",
