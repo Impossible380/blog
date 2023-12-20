@@ -13,7 +13,7 @@ class ArticleRepository
                                             *
                                         FROM
                                             `articles`
-                                        JOIN `users` ON `articles`.`author_id` = `users`.`id`");
+                                        JOIN `users` ON `author_id` = `users`.`id`");
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -23,7 +23,32 @@ class ArticleRepository
             return $article;
         }, $result);
 
+        dump($articles);
+
         return $articles;
+    }
+    
+    static function findLatest()
+    {
+        $query = Database::get()->query("SELECT
+                                            *
+                                        FROM
+                                            `articles`
+                                        JOIN `users` ON `author_id` = `users`.`id`
+                                        ORDER BY
+                                            `articles`.`id`
+                                        DESC
+                                        LIMIT 4");
+
+        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $latest_articles = array_map(function ($row) {
+            $article = new Article();
+            $article->fromSQL($row);
+            return $article;
+        }, $result);
+
+        return $latest_articles;
     }
 
     static function findOneById(int $id)

@@ -6,21 +6,7 @@
     <section>
 
         <div class="container">
-            <!-- <form class="row g-3">
-                <div class="col-auto">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" id="email">
-                </div>
-                <div class="col-auto">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" name="password" class="form-control" id="password">
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
-                </div>
-            </form> -->
-
-            <form action="/contact" method="post" class="form-example">
+            <form action="/contact" method="post" class="row gy-4">
                 <div class="form-example">
                     <label for="firstname">Prénom : </label>
                     <input type="text" name="firstname" id="firstname" class="form-control" required />
@@ -38,7 +24,7 @@
                     <textarea name="message" id="message" class="form-control" rows="5" cols="33"></textarea>
                 </div>
                 <div class="form-example">
-                    <button type="submit" class="btn btn-primary mt-3">Valider</button>
+                    <button type="submit" class="btn btn-primary">Valider</button>
                 </div>
             </form>
         </div>

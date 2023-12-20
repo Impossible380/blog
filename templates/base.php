@@ -14,7 +14,7 @@
 <body>
 
     <!-- Début HEADER -->
-    <header>
+    <header class="py-5">
 
         <?php include("../templates/header.php"); ?>
 
@@ -39,7 +39,7 @@
     <!-- Fin MAIN -->
 
     <!-- Début FOOTER -->
-    <footer class="bg-light">
+    <footer class="bg-light p-2">
 
         <?php include("../templates/footer.php"); ?>
 

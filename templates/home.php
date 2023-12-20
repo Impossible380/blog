@@ -4,18 +4,18 @@
 
     <!-- Début SECTION -->
     <section>
-        <div class="container">
 
-            <!-- <h2>Parker Press, à vous la liberté d'expression !</h2> -->
+        <div class="container">
             <p class="fs-4">Parker Press, à vous la liberté d'expression !</h2>
             <p>Avec Parker Press, écrivez des articles passionnants et bien d'autres !</p>
-
         </div>
+
     </section>
     <!-- Fin SECTION -->
     
     <!-- Début SECTION -->
     <section>
+
         <div class="container">
             <div class="row g-4">
 
@@ -44,6 +44,7 @@
 
             </div>
         </div>
+
     </section>
     <!-- Fin SECTION -->
 

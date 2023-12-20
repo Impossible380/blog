@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\Article;
-use App\Model\Entity\User;
 use App\Model\Repository\ArticleRepository;
-use App\Model\Repository\UserRepository;
 use App\Service\Database;
 
 class ArticleController
@@ -23,7 +21,6 @@ class ArticleController
         }
 
         $articles = ArticleRepository::findAll();
-        $users = UserRepository::findAll();
 
         require("../templates/article_list.php");
     }
@@ -67,7 +64,7 @@ class ArticleController
             exit();
         }
 
-        require("../templates/new_article.php");
+        require("../templates/article_insert.php");
     }
 
     function update($id)
@@ -116,7 +113,7 @@ class ArticleController
             exit();
         }
 
-        require("../templates/edit_article.php");
+        require("../templates/article_update.php");
     }
 
     function delete($id)
