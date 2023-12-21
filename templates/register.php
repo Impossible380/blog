@@ -2,27 +2,35 @@
 
     <h1 class="text-center fw-bold mb-5">Nouveau compte</h1>
 
-    <form action="/register" method="post" class="form-example">
-        <div class="form-example">
-            <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" required />
+    <!-- Début SECTION -->
+    <section>
+
+        <div class="container">
+            <form action="/register" method="post" class="row gy-4">
+                <div class="form-example">
+                    <label for="firstname">Prénom : </label>
+                    <input type="text" name="firstname" id="firstname" class="form-control" required />
+                </div>
+                <div class="form-example">
+                    <label for="lastname">Nom : </label>
+                    <input type="text" name="lastname" id="lastname" class="form-control" required />
+                </div>
+                <div class="form-example">
+                    <label for="email">Email : </label>
+                    <input type="email" name="email" id="email" class="form-control" required />
+                </div>
+                <div class="form-example">
+                    <label for="password">Mot de passe : </label>
+                    <input type="password" name="password" id="password" class="form-control" required />
+                </div>
+                <div class="form-example">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+            </form>
         </div>
-        <div class="form-example">
-            <label for="lastname">Nom : </label>
-            <input type="text" name="lastname" id="lastname" required />
-        </div>
-        <div class="form-example">
-            <label for="email">Email : </label>
-            <input type="email" name="email" id="email" required />
-        </div>
-        <div class="form-example">
-            <label for="email">Mot de passe : </label>
-            <input type="password" name="password" id="password" required />
-        </div>
-        <div class="form-example">
-            <input type="submit" value="Valider" row="3" />
-        </div>
-    </form>
+
+    </section>
+    <!-- Fin SECTION -->
 
     <?php $title = "Nouveau compte"; ?>
     

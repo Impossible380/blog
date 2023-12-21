@@ -9,6 +9,12 @@ class ArticleRepository
 {
     static function findAll()
     {
+        /* $query = Database::get()->query("SELECT
+                                            `articles`.`id`, `title`, `content`, `date`, `author_id`, `users`.`firstname`, `users`.`lastname`
+                                        FROM
+                                            `articles`
+                                        JOIN `users` ON `author_id` = `users`.`id`"); */
+
         $query = Database::get()->query("SELECT
                                             *
                                         FROM
@@ -22,8 +28,6 @@ class ArticleRepository
             $article->fromSQL($row);
             return $article;
         }, $result);
-
-        dump($articles);
 
         return $articles;
     }

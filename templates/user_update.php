@@ -2,27 +2,35 @@
 
     <h1 class="text-center fw-bold mb-5">Modifier le compte</h1>
 
-    <form action="/admin/users/<?= $user->id ?>/update" method="post" class="form-example">
-        <div class="form-example">
-            <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" value="<?= $user->firstname ?>" required />
+    <!-- Début SECTION -->
+    <section>
+
+        <div class="container">
+            <form action="/register" method="post" class="row gy-4">
+                <div class="form-example">
+                    <label for="firstname">Prénom : </label>
+                    <input type="text" name="firstname" id="firstname" class="form-control" value="<?php $user->firstname; ?>" required />
+                </div>
+                <div class="form-example">
+                    <label for="lastname">Nom : </label>
+                    <input type="text" name="lastname" id="lastname" class="form-control" value="<?php $user->lastname; ?>" required />
+                </div>
+                <div class="form-example">
+                    <label for="email">Email : </label>
+                    <input type="email" name="email" id="email" class="form-control" value="<?php $user->email; ?>" required />
+                </div>
+                <div class="form-example">
+                    <label for="password">Mot de passe : </label>
+                    <input type="password" name="password" id="password" class="form-control" value="<?php $user->password; ?>" required />
+                </div>
+                <div class="form-example">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+            </form>
         </div>
-        <div class="form-example">
-            <label for="lastname">Nom : </label>
-            <input type="text" name="lastname" id="lastname" value="<?= $user->lastname ?>" required />
-        </div>
-        <div class="form-example">
-            <label for="email">Email : </label>
-            <input type="email" name="email" id="email" value="<?= $user->email ?>" required />
-        </div>
-        <div class="form-example">
-            <label for="email">Mot de passe : </label>
-            <input type="password" name="password" id="password" value="<?= $user->password ?>" required />
-        </div>
-        <div class="form-example">
-            <input type="submit" value="Valider" row="3" />
-        </div>
-    </form>
+
+    </section>
+    <!-- Fin SECTION -->
 
     <?php $title = "Modifier le compte"; ?>
     

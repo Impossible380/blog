@@ -14,6 +14,7 @@
                             <th class="border-2 border-secondary p-2">id</th>
                             <th class="border-2 border-secondary p-2">titre</th>
                             <th class="border-2 border-secondary p-2">contenu</th>
+                            <th class="border-2 border-secondary p-2">date</th>
                             <th class="border-2 border-secondary p-2">prénom</th>
                             <th class="border-2 border-secondary p-2">nom</th>
                             <th class="border-2 border-secondary p-2">options</th>
@@ -36,10 +37,13 @@
                                     <?= $article->content; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->user->firstname; ?>
+                                    <?= $article->date; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->user->lastname; ?>
+                                    <?= $article->firstname; ?>
+                                </td>
+                                <td class="border-2 border-secondary p-2">
+                                    <?= $article->lastname; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
                                     <a href="/admin/articles/<?= $article->id; ?>/update">
@@ -56,7 +60,7 @@
 
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="text-end">
+                            <td colspan="7" class="text-end">
                                 <a href="/admin/articles/insert">Ajouter</a>
                             </td>
                         </tr>
