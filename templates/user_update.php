@@ -6,7 +6,7 @@
     <section>
 
         <div class="container">
-            <form action="/register" method="post" class="row gy-4">
+            <form action="/admin/users/<?= $id; ?>/update" method="post" class="row gy-4">
                 <div class="form-example">
                     <label for="firstname">Prénom : </label>
                     <input type="text" name="firstname" id="firstname" class="form-control" value="<?php $user->firstname; ?>" required />

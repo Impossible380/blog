@@ -6,7 +6,7 @@
     <section>
 
         <div class="container">
-            <form action="/contact" method="post" class="row gy-4">
+            <form action="/admin/articles/insert" method="post" class="row gy-4">
                 <div class="form-example">
                     <label for="title">Titre : </label>
                     <input type="text" name="title" id="title" class="form-control" required />

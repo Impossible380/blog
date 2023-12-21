@@ -92,7 +92,7 @@ class UserController
 
             $_SESSION["message"] = [
                 "type" => "success",
-                "text" => "Le compte qui a comme id '" . $id . "', comme prénom
+                "text" => "Le compte qui a comme id '" . $user->id . "', comme prénom
                             '" . $user->firstname . "' (anciennement
                             '" . $ancient_user->firstname . "') et comme nom
                             '" . $user->lastname . "' (anciennement

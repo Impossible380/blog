@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Model\Entity\Article;
 use App\Model\Repository\ArticleRepository;
+use App\Model\Repository\ConditionRepository;
 use App\Service\Database;
 
 class ArticleController
 {
     function list()
     {
+        // ConditionRepository::userConnected();
+
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = [
                 "type" => "danger",
@@ -49,6 +52,7 @@ class ArticleController
             $article->content = $_POST['title'];
             $article->title = $_POST['content'];
             $article->author_id = $_SESSION['user']->id;
+            $article->date = date("y-m-d");
 
             ArticleRepository::insert($article);
 
@@ -97,12 +101,15 @@ class ArticleController
             $ancient_article = $article;
 
             $article = new Article();
+            $article->id = $id;
             $article->title = $_POST["title"];
             $article->content = $_POST["content"];
 
+            ArticleRepository::update($article);
+
             $_SESSION["message"] = [
                 "type" => "success",
-                "text" => "L'article qui a comme id '" . $id . "', comme titre
+                "text" => "L'article qui a comme id '" . $article->id . "', comme titre
                             '" . $article->title . "' (anciennement
                             '" . $ancient_article->title . "') et comme contenu
                             '" . $article->content . "' (anciennement
@@ -146,7 +153,7 @@ class ArticleController
         
         $_SESSION["message"] = [
             "type" => "success",
-            "text" => "L'article qui a comme id '" . $id . "' a bien été supprimé."
+            "text" => "L'article qui a comme id '" . $article->id . "' a bien été supprimé."
         ];
 
         header("location: /admin/articles");

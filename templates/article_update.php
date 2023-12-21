@@ -1,4 +1,8 @@
-<?php ob_start(); ?>
+<?php
+
+use App\Model\Entity\Article;
+
+ ob_start(); ?>
 
     <h1 class="text-center fw-bold mb-5">Modifier l'article</h1>
 
@@ -6,20 +10,22 @@
     <section>
 
         <div class="container">
-            <form action="/contact" method="post" class="row gy-4">
+            <form action="/admin/articles/<?= $id; ?>/update" method="post" class="row gy-4">
                 <div class="form-example">
                     <label for="title">Titre : </label>
-                    <input type="text" name="title" id="title" class="form-control" required />
+                    <input type="text" name="title" id="title" class="form-control" value="<?php $article->title; ?>" required />
                 </div>
                 <div class="form-example">
                     <label for="content">Contenu : </label>
-                    <textarea name="content" id="content" rows="5" cols="33" class="form-control" required></textarea>
+                    <textarea name="content" id="content" rows="5" cols="33" class="form-control" required><?php $article->content; ?></textarea>
                 </div>
                 <div class="form-example">
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </div>
             </form>
         </div>
+
+        <?php dump($article); ?>
 
     </section>
     <!-- Fin SECTION -->

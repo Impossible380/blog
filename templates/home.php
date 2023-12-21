@@ -6,7 +6,7 @@
     <section>
 
         <div class="container">
-            <p class="fs-4">Parker Press, à vous la liberté d'expression !</h2>
+            <p class="fs-4">Parker Press, à vous la liberté d'expression !</p>
             <p>Avec Parker Press, écrivez des articles passionnants et bien d'autres !</p>
         </div>
 

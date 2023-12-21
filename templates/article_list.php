@@ -40,10 +40,10 @@
                                     <?= $article->date; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->firstname; ?>
+                                    <?= null /* $article->firstname; */ ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->lastname; ?>
+                                    <?= null /* $article->lastname; */ ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
                                     <a href="/admin/articles/<?= $article->id; ?>/update">

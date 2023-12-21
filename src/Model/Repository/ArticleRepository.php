@@ -18,8 +18,7 @@ class ArticleRepository
         $query = Database::get()->query("SELECT
                                             *
                                         FROM
-                                            `articles`
-                                        JOIN `users` ON `author_id` = `users`.`id`");
+                                            `articles`");
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -34,11 +33,20 @@ class ArticleRepository
     
     static function findLatest()
     {
+        /* $query = Database::get()->query("SELECT
+                                            `articles`.`id`, `title`, `content`, `date`, `author_id`, `users`.`firstname`, `users`.`lastname`
+                                        FROM
+                                            `articles`
+                                        JOIN `users` ON `author_id` = `users`.`id`
+                                        ORDER BY
+                                            `articles`.`id`
+                                        DESC
+                                        LIMIT 4"); */
+
         $query = Database::get()->query("SELECT
                                             *
                                         FROM
                                             `articles`
-                                        JOIN `users` ON `author_id` = `users`.`id`
                                         ORDER BY
                                             `articles`.`id`
                                         DESC
@@ -80,13 +88,14 @@ class ArticleRepository
 
     static function insert(Article $article)
     {
-        $query = Database::get()->prepare("INSERT INTO `articles`(`title`, `content`, `author_id`)
-                                            VALUES(:title, :content, :author_id)");
+        $query = Database::get()->prepare("INSERT INTO `articles`(`title`, `content`, `author_id`, `date`)
+                                            VALUES(:title, :content, :author_id, :date)");
 
         $query->execute([
             ":title" => $article->title,
             ":content" => $article->content,
             ":author_id" => $article->author_id,
+            ":date" => $article->date,
         ]);
     }
 
@@ -97,15 +106,13 @@ class ArticleRepository
                                             SET
                                                 `content` = :content,
                                                 `title` = :title,
-                                                `autohr_id` = :author_id
                                             WHERE
                                                 `id` = :id");
 
         $query->execute([
             ":id" => $article->id,
-            ":firstname" => $article->title,
-            ":lastname" => $article->content,
-            ":email" => $article->author_id
+            ":title" => $article->title,
+            ":content" => $article->content,
         ]);
     }
 
