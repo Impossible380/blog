@@ -7,18 +7,24 @@ use App\Service\Database;
 
 class ArticleRepository
 {
+    static function getBasicSelectQuery()
+    {
+        return "SELECT
+                    `articles`.`id`, `title`, `content`, `date`, `author_id`, 
+                    `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`
+                FROM
+                    `articles`
+                JOIN `users` ON `author_id` = `users`.`id`";
+    }
+
     static function findAll()
     {
-        /* $query = Database::get()->query("SELECT
-                                            `articles`.`id`, `title`, `content`, `date`, `author_id`, `users`.`firstname`, `users`.`lastname`
-                                        FROM
-                                            `articles`
-                                        JOIN `users` ON `author_id` = `users`.`id`"); */
+        $query = Database::get()->query(self::getBasicSelectQuery());
 
-        $query = Database::get()->query("SELECT
-                                            *
-                                        FROM
-                                            `articles`");
+        // $query = Database::get()->query("SELECT
+        //                                     *
+        //                                 FROM
+        //                                     `articles`");
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -30,27 +36,23 @@ class ArticleRepository
 
         return $articles;
     }
-    
+
     static function findLatest()
     {
-        /* $query = Database::get()->query("SELECT
-                                            `articles`.`id`, `title`, `content`, `date`, `author_id`, `users`.`firstname`, `users`.`lastname`
-                                        FROM
-                                            `articles`
-                                        JOIN `users` ON `author_id` = `users`.`id`
-                                        ORDER BY
-                                            `articles`.`id`
-                                        DESC
-                                        LIMIT 4"); */
-
-        $query = Database::get()->query("SELECT
-                                            *
-                                        FROM
-                                            `articles`
+        $query = Database::get()->query(self::getBasicSelectQuery() . "
                                         ORDER BY
                                             `articles`.`id`
                                         DESC
                                         LIMIT 4");
+
+        // $query = Database::get()->query("SELECT
+        //                                     *
+        //                                 FROM
+        //                                     `articles`
+        //                                 ORDER BY
+        //                                     `articles`.`id`
+        //                                 DESC
+        //                                 LIMIT 4");
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -65,12 +67,9 @@ class ArticleRepository
 
     static function findOneById(int $id)
     {
-        $query = Database::get()->prepare("SELECT
-                                                *
-                                            FROM
-                                                `articles`
+        $query = Database::get()->prepare(self::getBasicSelectQuery() . "
                                             WHERE
-                                                `id` = :id");
+                                                `articles`.`id` = :id");
 
         $query->execute([":id" => $id]);
 
@@ -104,8 +103,8 @@ class ArticleRepository
         $query = Database::get()->prepare("UPDATE
                                                 `articles`
                                             SET
-                                                `content` = :content,
                                                 `title` = :title,
+                                                `content` = :content
                                             WHERE
                                                 `id` = :id");
 
@@ -120,7 +119,7 @@ class ArticleRepository
     {
         $query = Database::get()->prepare("DELETE
                                             FROM
-                                                `users`
+                                                `articles`
                                             WHERE
                                                 `id` = :id");
 

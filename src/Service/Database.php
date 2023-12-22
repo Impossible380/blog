@@ -12,7 +12,9 @@ class Database {
         $user = "root";
         $password = "root";
 
-        self::$pdo = new \PDO("mysql:host=$host;dbname=$db", $user, $password);
+        self::$pdo = new \PDO("mysql:host=$host;dbname=$db", $user, $password, [
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+        ]);
     }
 
     static function get() {

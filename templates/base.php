@@ -25,8 +25,10 @@
     <main class="py-5">
 
         <?php if (!empty($_SESSION["message"])) { ?>
-            <div class="alert alert-<?= $_SESSION["message"]["type"] ?>" role="alert">
-                <?= $_SESSION["message"]["text"] ?>
+            <div class="container">
+                <div class="alert alert-<?= $_SESSION["message"]["type"] ?>" role="alert">
+                    <?= $_SESSION["message"]["text"] ?>
+                </div>
             </div>
             <?php
                 $_SESSION["message"] = null

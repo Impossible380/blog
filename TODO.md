@@ -110,3 +110,14 @@ Modifier toutes les requêtes pour que ce soit des requêtes préparées
 ## Prochaines sessions
 * Bien expliquer le dossier public
 * Encoder le password
+
+# 21/12/2023
+## Pendant la session
+* Review des modification de la partie Model du MVC
+* Gestion du nom et prénom de l'utilisateur
+# A faire:
+* ...
+## Prochaines sessions
+* Bien expliquer le dossier public
+* Encoder le password
+* Mieux gérer le problème de suppression d'un utilisateur avec des articles liés

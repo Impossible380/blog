@@ -9,19 +9,19 @@
             <form action="/admin/users/<?= $id; ?>/update" method="post" class="row gy-4">
                 <div class="form-example">
                     <label for="firstname">Prénom : </label>
-                    <input type="text" name="firstname" id="firstname" class="form-control" value="<?php $user->firstname; ?>" required />
+                    <input type="text" name="firstname" id="firstname" class="form-control" value="<?= $user->firstname; ?>" required />
                 </div>
                 <div class="form-example">
                     <label for="lastname">Nom : </label>
-                    <input type="text" name="lastname" id="lastname" class="form-control" value="<?php $user->lastname; ?>" required />
+                    <input type="text" name="lastname" id="lastname" class="form-control" value="<?= $user->lastname; ?>" required />
                 </div>
                 <div class="form-example">
                     <label for="email">Email : </label>
-                    <input type="email" name="email" id="email" class="form-control" value="<?php $user->email; ?>" required />
+                    <input type="email" name="email" id="email" class="form-control" value="<?= $user->email; ?>" required />
                 </div>
                 <div class="form-example">
                     <label for="password">Mot de passe : </label>
-                    <input type="password" name="password" id="password" class="form-control" value="<?php $user->password; ?>" required />
+                    <input type="password" name="password" id="password" class="form-control" value="<?= $user->password; ?>" required />
                 </div>
                 <div class="form-example">
                     <button type="submit" class="btn btn-primary">Valider</button>

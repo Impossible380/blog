@@ -104,6 +104,8 @@ class ArticleController
             $article->id = $id;
             $article->title = $_POST["title"];
             $article->content = $_POST["content"];
+            /* $article->author_id = $ancient_article->author_id;
+            $article->date = $ancient_article->date; */
 
             ArticleRepository::update($article);
 
