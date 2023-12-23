@@ -121,3 +121,15 @@ Modifier toutes les requêtes pour que ce soit des requêtes préparées
 * Bien expliquer le dossier public
 * Encoder le password
 * Mieux gérer le problème de suppression d'un utilisateur avec des articles liés
+
+# 23/12/2023
+## Pendant la session
+* Encoder le password
+* Mieux gérer le password (faire le select uniquement si besoin)
+# A faire
+* Corriger le problème du password qui s'affiche sur la page article_details
+* Afficher en plus jolie la page User Parameter
+* Afficher en plus jolie la page Article Détail
+# Prochaines sessions
+* Bien expliquer le dossier public
+* Mieux gérer le problème de suppression d'un utilisateur avec des articles liés

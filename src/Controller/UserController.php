@@ -86,7 +86,12 @@ class UserController
             $user->firstname = $_POST["firstname"];
             $user->lastname = $_POST["lastname"];
             $user->email = $_POST["email"];
-            $user->password = $_POST["password"];
+
+            if (!empty($_POST['password'])) {
+                $user->password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+            } else {
+                $user->password = $ancient_user->password;
+            }
 
             UserRepository::update($user);
 

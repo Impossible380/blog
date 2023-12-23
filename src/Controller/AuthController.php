@@ -20,7 +20,7 @@ class AuthController
             $user->firstname = $_POST['firstname'];
             $user->lastname = $_POST['lastname'];
             $user->email = $_POST['email'];
-            $user->password = $_POST['password'];
+            $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
             $user = UserRepository::insert($user);
 
@@ -47,9 +47,9 @@ class AuthController
         }
 
         if (!empty($_POST)) {
-            $user = UserRepository::findOneByEmail($_POST["email"]);
+            $user = UserRepository::findOneByEmail($_POST["email"], true);
 
-            if (!$user || $user->password !== $_POST["password"]) {
+            if (!$user || !password_verify($_POST["password"], $user->password)) {
                 $_SESSION["message"] = [
                     "type" => "danger",
                     "text" => "Email ou mot de passe invalide."

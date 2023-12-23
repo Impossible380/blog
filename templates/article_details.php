@@ -2,7 +2,15 @@
 
     <h1 class="text-center fw-bold mb-5">Détails de l'article</h1>
 
-    <?php dump($article); ?>
+    <!-- Début SECTION -->
+    <section>
+
+        <div class="container">
+            <?php dump($article); ?>
+        </div>
+
+    </section>
+    <!-- Fin SECTION -->
 
     <?php $title = "Détails de l'article"; ?>
     

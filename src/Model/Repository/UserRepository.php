@@ -7,12 +7,21 @@ use App\Service\Database;
 
 class UserRepository
 {
+    static function getBasicSelectQuery(bool $needsPassword = false)
+    {
+        return "SELECT
+                    `users`.`id`,
+                    `users`.`firstname`,
+                    `users`.`lastname`,
+                    `users`.`email`,
+                    ". ($needsPassword ? "`users`.`password`" : "NULL") ." AS password
+                FROM
+                    `users`";
+    }
+
     static function findAll()
     {
-        $query = Database::get()->query("SELECT
-                                            *
-                                        FROM
-                                            `users`");
+        $query = Database::get()->query(self::getBasicSelectQuery());
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -27,10 +36,7 @@ class UserRepository
 
     static function findOneById(int $id)
     {
-        $query = Database::get()->prepare("SELECT
-                                                *
-                                            FROM
-                                                `users`
+        $query = Database::get()->prepare(self::getBasicSelectQuery() ."
                                             WHERE
                                                 `id` = :id");
 
@@ -48,12 +54,9 @@ class UserRepository
         return $user;
     }
 
-    static function findOneByEmail(string $email)
+    static function findOneByEmail(string $email, bool $needsPassword)
     {
-        $query = Database::get()->prepare("SELECT
-                                                *
-                                            FROM
-                                                `users`
+        $query = Database::get()->prepare(self::getBasicSelectQuery($needsPassword) ."
                                             WHERE
                                                 `email` = :email");
 

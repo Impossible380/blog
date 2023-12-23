@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-example">
                     <label for="password">Mot de passe : </label>
-                    <input type="password" name="password" id="password" class="form-control" value="<?= $user->password; ?>" required />
+                    <input type="password" name="password" id="password" class="form-control" />
                 </div>
                 <div class="form-example">
                     <button type="submit" class="btn btn-primary">Valider</button>
