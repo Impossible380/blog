@@ -7,6 +7,24 @@ use App\Service\Database;
 
 class ArticleRepository
 {
+    static function countByUser(int $user_id):int {
+        $query = Database::get()->prepare("SELECT
+                                                COUNT(*) AS `article_number`,
+                                                'test' AS `Test`
+                                            FROM
+                                                `articles`
+                                            WHERE
+                                                `articles`.`author_id` = :user_id");
+        
+        $query->execute([
+            ":user_id" => $user_id
+        ]);
+        
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return intval($result['article_number']); // nombre d'articles de l'utilisateur n° $user_id
+    }
+
     static function getBasicSelectQuery()
     {
         return "SELECT

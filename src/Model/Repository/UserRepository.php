@@ -54,7 +54,7 @@ class UserRepository
         return $user;
     }
 
-    static function findOneByEmail(string $email, bool $needsPassword)
+    static function findOneByEmail(string $email, bool $needsPassword = false)
     {
         $query = Database::get()->prepare(self::getBasicSelectQuery($needsPassword) ."
                                             WHERE

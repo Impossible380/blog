@@ -127,9 +127,21 @@ Modifier toutes les requêtes pour que ce soit des requêtes préparées
 * Encoder le password
 * Mieux gérer le password (faire le select uniquement si besoin)
 # A faire
-* Corriger le problème du password qui s'affiche sur la page article_details
 * Afficher en plus jolie la page User Parameter
 * Afficher en plus jolie la page Article Détail
+* Corriger le problème du password qui s'affiche sur la page article_details
+* Gérer les commentaires sur les articles
 # Prochaines sessions
 * Bien expliquer le dossier public
 * Mieux gérer le problème de suppression d'un utilisateur avec des articles liés
+
+# 06/01/2023
+## Pendant la session
+* Faire le point sur l'avancement du projet
+* Création de la table comments
+# A faire
+* Gérer les commentaires sur les articles
+# Prochaines sessions
+* Afficher en plus jolie la page User Parameter
+* Afficher en plus jolie la page Article Détail
+* Corriger le problème du password qui s'affiche sur la page article_details

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\User;
+use App\Model\Repository\ArticleRepository;
 use App\Model\Repository\UserRepository;
 use App\Service\Database;
 
@@ -116,19 +117,33 @@ class AuthController
             exit();
         }
 
-        UserRepository::delete($id);
+        $count = ArticleRepository::countByUser($id);
 
-        if ($_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "info",
-                "text" => "Merci d'être venu sur Parker Press et bonne continuation !"
-            ];
-
-            $_SESSION["user_connected"] = false;
-            $_SESSION["user"] = null;
+        if ($count === 0) {
+            UserRepository::delete($id);
+    
+            if ($_SESSION["user_connected"]) {
+                $_SESSION["message"] = [
+                    "type" => "info",
+                    "text" => "Merci d'être venu sur Parker Press et bonne continuation !"
+                ];
+    
+                $_SESSION["user_connected"] = false;
+                $_SESSION["user"] = null;
+            }
+    
+            header("location: /");
+            exit();
         }
 
-        header("location: /");
-        exit();
+        else {
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous ne pouvez pas supprimer votre compte car vous avez encore $count article(s)."
+            ];
+
+            header("location: /admin/users");
+            exit();
+        }
     }
 }
