@@ -1,9 +1,9 @@
 <?php
 
-use App\Controller\HomeController;
+use App\Controller\ArticleController;
 use App\Controller\AuthController;
 use App\Controller\ContactController;
-use App\Controller\ArticleController;
+use App\Controller\HomeController;
 use App\Controller\UserController;
 use App\Service\Database;
 

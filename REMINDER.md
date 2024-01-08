@@ -31,4 +31,3 @@
 * modifier le controller ArticleController::articledetail()
 ** aller chercher les commentaires en base de donnée
 * modifier la vue article_detail.php
-

@@ -2,24 +2,33 @@
 
 namespace App\Model\Entity;
 
-class Article
+class Comment
 {
     public $id;
-    public $title;
     public $content;
     public $author_id;
+    public $article_id;
     public $date;
+    public $status;
     
+    public Article $article;
     public User $user;
 
     function fromSQL($row)
     {
-        // article
+        // comment
         $this->id = $row['id'];
-        $this->title = $row['title'];
         $this->content = $row['content'];
         $this->author_id = $row['author_id'];
+        $this->article_id = $row['article_id'];
         $this->date = $row['date'];
+        $this->status = $row['status'];
+
+        // article
+        $this->article = new Article();
+        $article_data = $row;
+        $article_data["id"] = $row['article_id'];
+        $this->article->fromSQL($article_data);
 
         // user
         $this->user = new User();

@@ -1,12 +1,12 @@
 -- Structure
 CREATE TABLE `articles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `date` date DEFAULT NOW(),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `content` text NOT NULL,
+    `author_id` int(11) NOT NULL,
+    `date` date DEFAULT NOW(),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
 );
 
 -- Données

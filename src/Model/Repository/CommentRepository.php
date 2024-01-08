@@ -2,36 +2,20 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\Article;
+use App\Model\Entity\Comment;
 use App\Service\Database;
 
-class ArticleRepository
+class CommentRepository
 {
-    static function countByUser(int $user_id):int {
-        $query = Database::get()->prepare("SELECT
-                                                COUNT(*) AS `article_number`,
-                                                'test' AS `Test`
-                                            FROM
-                                                `articles`
-                                            WHERE
-                                                `articles`.`author_id` = :user_id");
-        
-        $query->execute([
-            ":user_id" => $user_id
-        ]);
-        
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
-
-        return intval($result['article_number']); // nombre d'articles de l'utilisateur n° $user_id
-    }
-
     static function getBasicSelectQuery()
     {
         return "SELECT
-                    `articles`.`id`, `title`, `content`, `date`, `author_id`, 
+                    `comments`.`id`, `content`, `author_id`, `article_id`,
+                    `articles`.`id`, `title`, `content`, `author_id`, `date`, 
                     `users`.`id`, `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`, `users`.`status`
                 FROM
-                    `articles`
+                    `comments`
+                JOIN `articles` ON `article_id` = `article`.`id`
                 JOIN `users` ON `author_id` = `users`.`id`";
     }
 

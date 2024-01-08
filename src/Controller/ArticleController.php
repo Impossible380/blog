@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\Entity\Article;
 use App\Model\Repository\ArticleRepository;
 use App\Model\Repository\ConditionRepository;
+use App\Model\Repository\UserRepository;
 use App\Service\Database;
 
 class ArticleController
@@ -31,6 +32,8 @@ class ArticleController
     function details($id)
     {
         $article = ArticleRepository::findOneById($id);
+
+        $user = UserRepository::findOneById($article->author_id);
 
         require("../templates/article_details.php");
     }
