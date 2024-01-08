@@ -19,11 +19,26 @@
 
         <div class="container">
             <div class="row">
-                <h2 class="mb-4">Commentaires</h2>
+
+                <h2>Commentaires</h2>
+
+                <form action="/articles/<?= $id; ?>/comment" method="post" class="row gy-4 mb-5">
+                    <div class="form-example">
+                        <label for="content">Commentez cet article : </label>
+                        <textarea name="content" id="content" rows="5" cols="33" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-example">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    </div>
+                </form>
 
                 <?php foreach($comments as $comment) { ?>
-                    <p>De <?= $comment->user->firstname ?> <?= $comment->user->lastname ?> le <?= $comment->date ?></p>
-                    <p><?= $comment->content ?></p>
+
+                    <div class="shadow rounded">
+                        <p class="fw-bold">De <?= $comment->user->firstname ?> <?= $comment->user->lastname ?> le <?= $comment->date ?></p>
+                        <p><?= $comment->content ?></p>
+                    </div>
+
                 <?php } ?>
 
             </div>

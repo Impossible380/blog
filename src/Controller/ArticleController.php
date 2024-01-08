@@ -57,8 +57,8 @@ class ArticleController
 
         if (!empty($_POST)) {
             $article = new Article();
-            $article->content = $_POST['title'];
-            $article->title = $_POST['content'];
+            $article->title = $_POST['title'];
+            $article->content = $_POST['content'];
             $article->author_id = $_SESSION['user']->id;
             $article->date = date("y-m-d H:i:s");
 

@@ -17,7 +17,7 @@ class CommentRepository
                     `comments`
                 JOIN `users` ON `comments`.`author_id` = `users`.`id`
                 JOIN `articles` ON `comments`.`article_id` = `articles`.`id`
-                WHERE `comments`.`article_id` = :article_id";
+                WHERE `comments`.`article_id` = :article_id AND `comments`.`status` = 'accepted'";
     }
 
     static function findAllOfArticle(int $article_id)

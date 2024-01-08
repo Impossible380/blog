@@ -145,3 +145,21 @@ Modifier toutes les requêtes pour que ce soit des requêtes préparées
 * Afficher en plus jolie la page User Parameter
 * Afficher en plus jolie la page Article Détail
 * Corriger le problème du password qui s'affiche sur la page article_details
+
+# 08/01/2023
+* Afficher en plus jolie la page Article Détail OK
+## Pendant la session
+* Faire le formulaire des commentaires /article/:id/comment
+# A faire
+* Gérer la validation des commentaires
+/admin/comments --> liste des commentaires à valider
+/admin/comments/:id/validate --> action qui valide le commentaire et qui redirige vers /admin/comments
+/admin/comments/:id/reject --> action qui refuse le commentaire et qui redirige vers /admin/comments
+-->app.php (routeur)
+-->Controller
+-->Repository
+-->Template
+
+# Prochaines sessions
+* Afficher en plus jolie la page User Parameter
+* Corriger le problème du password qui s'affiche sur la page article_details

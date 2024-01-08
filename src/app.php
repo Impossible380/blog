@@ -2,6 +2,7 @@
 
 use App\Controller\ArticleController;
 use App\Controller\AuthController;
+use App\Controller\CommentController;
 use App\Controller\ContactController;
 use App\Controller\HomeController;
 use App\Controller\UserController;
@@ -63,6 +64,12 @@ Database::init();
     if (1 === preg_match('/^\/articles\/(?<id>\d+)$/', $url, $matches)) {
         $controller = new ArticleController();
         $controller->details($matches["id"]);
+        exit();
+    }
+
+    if (1 === preg_match('/^\/articles\/(?<id>\d+)\/comment$/', $url, $matches)) {
+        $controller = new CommentController();
+        $controller->insert($matches["id"]);
         exit();
     }
 
