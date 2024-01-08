@@ -10,10 +10,7 @@ class UserRepository
     static function getBasicSelectQuery(bool $needsPassword = false)
     {
         return "SELECT
-                    `users`.`id`,
-                    `users`.`firstname`,
-                    `users`.`lastname`,
-                    `users`.`email`,
+                    `users`.`id`, `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`status`,
                     ". ($needsPassword ? "`users`.`password`" : "NULL") ." AS password
                 FROM
                     `users`";

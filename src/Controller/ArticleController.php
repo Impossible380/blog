@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Model\Entity\Article;
+use App\Model\Entity\Comment;
+use App\Model\Entity\User;
 use App\Model\Repository\ArticleRepository;
+use App\Model\Repository\CommentRepository;
 use App\Model\Repository\ConditionRepository;
 use App\Model\Repository\UserRepository;
 use App\Service\Database;
@@ -33,6 +36,8 @@ class ArticleController
     {
         $article = ArticleRepository::findOneById($id);
 
+        $comments = CommentRepository::findAllOfArticle($id);
+
         $user = UserRepository::findOneById($article->author_id);
 
         require("../templates/article_details.php");
@@ -55,7 +60,7 @@ class ArticleController
             $article->content = $_POST['title'];
             $article->title = $_POST['content'];
             $article->author_id = $_SESSION['user']->id;
-            $article->date = date("y-m-d");
+            $article->date = date("y-m-d H:i:s");
 
             ArticleRepository::insert($article);
 

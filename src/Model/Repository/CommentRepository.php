@@ -10,110 +10,65 @@ class CommentRepository
     static function getBasicSelectQuery()
     {
         return "SELECT
-                    `comments`.`id`, `content`, `author_id`, `article_id`,
-                    `articles`.`id`, `title`, `content`, `author_id`, `date`, 
-                    `users`.`id`, `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`, `users`.`status`
+                    `comments`.`id`, `comments`.`content`, `comments`.`article_id`, `comments`.`author_id`, `comments`.`date`, `comments`.`status`,
+                    `articles`.`title`,
+                    `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`
                 FROM
                     `comments`
-                JOIN `articles` ON `article_id` = `article`.`id`
-                JOIN `users` ON `author_id` = `users`.`id`";
+                JOIN `users` ON `comments`.`author_id` = `users`.`id`
+                JOIN `articles` ON `comments`.`article_id` = `articles`.`id`
+                WHERE `comments`.`article_id` = :article_id";
     }
 
-    static function findAll()
+    static function findAllOfArticle(int $article_id)
     {
-        $query = Database::get()->query(self::getBasicSelectQuery());
+        $query = Database::get()->prepare(self::getBasicSelectQuery());
 
         // $query = Database::get()->query("SELECT
         //                                     *
         //                                 FROM
         //                                     `articles`");
 
-        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $articles = array_map(function ($row) {
-            $article = new Article();
-            $article->fromSQL($row);
-            return $article;
-        }, $result);
-
-        return $articles;
-    }
-
-    static function findLatest()
-    {
-        $query = Database::get()->query(self::getBasicSelectQuery() . "
-                                        ORDER BY
-                                            `articles`.`id`
-                                        DESC
-                                        LIMIT 4");
-
-        // $query = Database::get()->query("SELECT
-        //                                     *
-        //                                 FROM
-        //                                     `articles`
-        //                                 ORDER BY
-        //                                     `articles`.`id`
-        //                                 DESC
-        //                                 LIMIT 4");
+        $query->execute([
+            ":article_id" => $article_id,
+        ]);
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        $latest_articles = array_map(function ($row) {
-            $article = new Article();
-            $article->fromSQL($row);
-            return $article;
+        $comments = array_map(function ($row) {
+            $comment = new Comment();
+            $comment->fromSQL($row);
+            return $comment;
         }, $result);
 
-        return $latest_articles;
+        return $comments;
     }
 
-    static function findOneById(int $id)
+    static function insert(Comment $comment)
     {
-        $query = Database::get()->prepare(self::getBasicSelectQuery() . "
-                                            WHERE
-                                                `articles`.`id` = :id");
-
-        $query->execute([":id" => $id]);
-
-        $row = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if (!$row) {
-            return null;
-        }
-
-        $article = new Article();
-        $article->fromSQL($row);
-
-        return $article;
-    }
-
-    static function insert(Article $article)
-    {
-        $query = Database::get()->prepare("INSERT INTO `articles`(`title`, `content`, `author_id`, `date`)
-                                            VALUES(:title, :content, :author_id, :date)");
+        $query = Database::get()->prepare("INSERT INTO `comments`(`content`, `article_id`, `author_id`, `date`)
+                                            VALUES(:content, :article_id, :author_id, :date)");
 
         $query->execute([
-            ":title" => $article->title,
-            ":content" => $article->content,
-            ":author_id" => $article->author_id,
-            ":date" => $article->date,
+            ":content" => $comment->content,
+            ":article_id" => $comment->article_id,
+            ":author_id" => $comment->author_id,
+            ":date" => $comment->date,
         ]);
     }
 
-    static function update(Article $article)
+    static function update(Comment $comment)
     {
         $query = Database::get()->prepare("UPDATE
-                                                `articles`
+                                                `comments`
                                             SET
-                                                `title` = :title,
                                                 `content` = :content
                                             WHERE
                                                 `id` = :id");
 
         $query->execute([
-            ":id" => $article->id,
-            ":title" => $article->title,
-            ":content" => $article->content,
+            ":id" => $comment->id,
+            ":content" => $comment->content,
         ]);
     }
 
@@ -121,7 +76,7 @@ class CommentRepository
     {
         $query = Database::get()->prepare("DELETE
                                             FROM
-                                                `articles`
+                                                `comments`
                                             WHERE
                                                 `id` = :id");
 

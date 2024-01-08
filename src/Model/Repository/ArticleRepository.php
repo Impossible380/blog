@@ -28,11 +28,11 @@ class ArticleRepository
     static function getBasicSelectQuery()
     {
         return "SELECT
-                    `articles`.`id`, `title`, `content`, `date`, `author_id`, 
-                    `users`.`id`, `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`, `users`.`status`
+                    `articles`.`id`, `articles`.`title`, `articles`.`content`, `articles`.`date`, `articles`.`author_id`, 
+                    `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`, `users`.`status`
                 FROM
                     `articles`
-                JOIN `users` ON `author_id` = `users`.`id`";
+                JOIN `users` ON `articles`.`author_id` = `users`.`id`";
     }
 
     static function findAll()
