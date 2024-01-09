@@ -21,8 +21,6 @@
             </form>
         </div>
 
-        <?php dump($article); ?>
-
     </section>
     <!-- Fin SECTION -->
 

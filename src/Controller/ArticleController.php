@@ -3,29 +3,16 @@
 namespace App\Controller;
 
 use App\Model\Entity\Article;
-use App\Model\Entity\Comment;
-use App\Model\Entity\User;
 use App\Model\Repository\ArticleRepository;
 use App\Model\Repository\CommentRepository;
 use App\Model\Repository\ConditionRepository;
 use App\Model\Repository\UserRepository;
-use App\Service\Database;
 
 class ArticleController
 {
     function list()
     {
-        // ConditionRepository::userConnected();
-
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         $articles = ArticleRepository::findAll();
 
@@ -45,15 +32,7 @@ class ArticleController
 
     function insert()
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         if (!empty($_POST)) {
             $article = new Article();
@@ -81,15 +60,7 @@ class ArticleController
 
     function update($id)
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 
@@ -109,11 +80,8 @@ class ArticleController
             $ancient_article = $article;
 
             $article = new Article();
-            $article->id = $id;
             $article->title = $_POST["title"];
             $article->content = $_POST["content"];
-            /* $article->author_id = $ancient_article->author_id;
-            $article->date = $ancient_article->date; */
 
             ArticleRepository::update($article);
 
@@ -135,15 +103,7 @@ class ArticleController
 
     function delete($id)
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-            
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 

@@ -16,13 +16,14 @@ class CommentRepository
                 FROM
                     `comments`
                 JOIN `users` ON `comments`.`author_id` = `users`.`id`
-                JOIN `articles` ON `comments`.`article_id` = `articles`.`id`
-                WHERE `comments`.`article_id` = :article_id AND `comments`.`status` = 'accepted'";
+                JOIN `articles` ON `comments`.`article_id` = `articles`.`id`";
     }
 
     static function findAllOfArticle(int $article_id)
     {
-        $query = Database::get()->prepare(self::getBasicSelectQuery());
+        $query = Database::get()->prepare(self::getBasicSelectQuery() . "
+                                            WHERE `comments`.`article_id` = :article_id
+                                            AND `comments`.`status` = 'accepted'");
 
         // $query = Database::get()->query("SELECT
         //                                     *
@@ -30,7 +31,7 @@ class CommentRepository
         //                                     `articles`");
 
         $query->execute([
-            ":article_id" => $article_id,
+            ":article_id" => $article_id
         ]);
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
@@ -42,6 +43,44 @@ class CommentRepository
         }, $result);
 
         return $comments;
+    }
+
+    static function findWaiting()
+    {
+        $query = Database::get()->query(self::getBasicSelectQuery() . "
+                                        WHERE `comments`.`status` = 'waiting'");
+
+        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $comments = array_map(function ($row) {
+            $comment = new Comment();
+            $comment->fromSQL($row);
+            return $comment;
+        }, $result);
+
+        return $comments;
+    }
+
+    static function validate($id)
+    {
+        $query = Database::get()->prepare("UPDATE `comments`
+                                            SET `comments`.`status` = 'accepted'
+                                            WHERE `id` = :id");
+
+        $query->execute([
+            ":id" => $id
+        ]);
+    }
+
+    static function reject($id)
+    {
+        $query = Database::get()->prepare("UPDATE `comments`
+                                            SET `comments`.`status` = 'rejected'
+                                            WHERE `id` = :id");
+
+        $query->execute([
+            ":id" => $id
+        ]);
     }
 
     static function insert(Comment $comment)

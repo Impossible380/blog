@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row g-4">
 
-                <?php foreach($latest_articles as $article) { ?>
+                <?php foreach($articles as $article) { ?>
                     
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="card h-100">

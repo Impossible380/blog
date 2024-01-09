@@ -4,7 +4,7 @@ namespace App\Model\Repository;
 
 class ConditionRepository
 {
-    static function user_connected()
+    static function userConnected()
     {
         if (!$_SESSION["user_connected"]) {
             $_SESSION["message"] = [

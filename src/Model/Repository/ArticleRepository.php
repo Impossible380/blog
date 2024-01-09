@@ -74,13 +74,13 @@ class ArticleRepository
 
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        $latest_articles = array_map(function ($row) {
+        $articles = array_map(function ($row) {
             $article = new Article();
             $article->fromSQL($row);
             return $article;
         }, $result);
 
-        return $latest_articles;
+        return $articles;
     }
 
     static function findOneById(int $id)

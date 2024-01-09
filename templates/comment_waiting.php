@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-    <h1 class="text-center fw-bold mb-5">Liste des articles</h1>
+    <h1 class="text-center fw-bold mb-5">Liste des commentaires</h1>
     
     <!-- Début SECTION -->
     <section>
@@ -12,59 +12,49 @@
                     <thead class="text-center">
                         <tr>
                             <th class="border-2 border-secondary p-2">id</th>
-                            <th class="border-2 border-secondary p-2">titre</th>
                             <th class="border-2 border-secondary p-2">contenu</th>
                             <th class="border-2 border-secondary p-2">date</th>
                             <th class="border-2 border-secondary p-2">prénom</th>
                             <th class="border-2 border-secondary p-2">nom</th>
+                            <th class="border-2 border-secondary p-2">statut</th>
                             <th class="border-2 border-secondary p-2">options</th>
                         </tr>
                     </thead>
 
                     <tbody>
 
-                        <?php foreach($articles as $article) { ?>
+                        <?php foreach($comments as $comment) { ?>
                             <tr>
                                 <td class="border-2 border-secondary p-2 text-center">
-                                    <?= $article->id; ?>
+                                    <?= $comment->id; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <a href="/articles/<?= $article->id; ?>">
-                                        <?= $article->title; ?>
-                                    </a>
+                                    <?= $comment->content; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->content; ?>
+                                    <?= $comment->date; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->date; ?>
+                                    <?= $comment->user->firstname; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->user->firstname; ?>
+                                    <?= $comment->user->lastname; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->user->lastname; ?>
+                                    <?= $comment->status; ?>
                                 </td>
-                                <td class="border-2 border-secondary p-2">
-                                    <a class="text-secondary" href="/admin/articles/<?= $article->id; ?>/update">
-                                        Modifier</a>
+                                <td class="border-2 border-secondary p-2 justify-content-between">
+                                    <a class="text-success" href="/admin/comments/<?= $comment->id; ?>/validate">
+                                        Valider</a>
                                     /
-                                    <a class="text-danger" href="/admin/articles/<?= $article->id; ?>/delete">
-                                        Supprimer
+                                    <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/reject">
+                                        Rejeter
                                     </a>
                                 </td>
                             </tr>
                         <?php } ?>
 
                     </tbody>
-
-                    <tfoot>
-                        <tr>
-                            <td colspan="7" class="text-end">
-                                <a class="text-success" href="/admin/articles/insert">Ajouter</a>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </table>
 
             </div>

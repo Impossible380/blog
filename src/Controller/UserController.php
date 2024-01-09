@@ -3,22 +3,14 @@
 namespace App\Controller;
 
 use App\Model\Entity\User;
+use App\Model\Repository\ConditionRepository;
 use App\Model\Repository\UserRepository;
-use App\Service\Database;
 
 class UserController
 {
     function list()
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         $users = UserRepository::findAll();
 
@@ -27,15 +19,7 @@ class UserController
 
     function parameters($id)
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         $user = UserRepository::findOneById($id);
 
@@ -54,15 +38,7 @@ class UserController
 
     function update($id)
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         /// récuperer le user dans la bdd grace à l'id $_GET['id']
 
@@ -82,7 +58,6 @@ class UserController
             $ancient_user = $user;
 
             $user = new User();
-            $user->id = $id;
             $user->firstname = $_POST["firstname"];
             $user->lastname = $_POST["lastname"];
             $user->email = $_POST["email"];

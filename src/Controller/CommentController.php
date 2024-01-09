@@ -4,20 +4,46 @@ namespace App\Controller;
 
 use App\Model\Entity\Comment;
 use App\Model\Repository\CommentRepository;
+use App\Model\Repository\ConditionRepository;
 
 class CommentController
 {
+    function waiting_list()
+    {
+        $comments = CommentRepository::findWaiting();
+
+        require("../templates/comment_waiting.php");
+    }
+
+    function validate($id)
+    {
+        CommentRepository::validate($id);
+
+        $_SESSION["message"] = [
+            "type" => "success",
+            "text" => "Commentaire validé."
+        ];
+
+        header("location: /admin/comments");
+        exit();
+    }
+
+    function reject($id)
+    {
+        CommentRepository::reject($id);
+
+        $_SESSION["message"] = [
+            "type" => "danger",
+            "text" => "Commentaire rejeté."
+        ];
+
+        header("location: /admin/comments");
+        exit();
+    }
+    
     function insert(int $article_id)
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
         
         if (empty($_POST) || empty($_POST["content"])) {
             $_SESSION["message"] = [

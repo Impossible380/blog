@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Model\Entity\User;
 use App\Model\Repository\ArticleRepository;
+use App\Model\Repository\ConditionRepository;
 use App\Model\Repository\UserRepository;
-use App\Service\Database;
 
 class AuthController
 {
@@ -93,15 +93,7 @@ class AuthController
 
     function farewell($id) // "Farewell" signifie "Adieu" en anglais
     {
-        if (!$_SESSION["user_connected"]) {
-            $_SESSION["message"] = [
-                "type" => "danger",
-                "text" => "Vous n'êtes pas connecté."
-            ];
-
-            header("location: /login");
-            exit();
-        }
+        ConditionRepository::userConnected();
 
         /// récuperer l'article dans la bdd grace à l'id $_GET['id']
 

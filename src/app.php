@@ -12,21 +12,43 @@ Database::init();
 
     $url = $_SERVER['REQUEST_URI'];
 
-    // Début HomeController
-    if ($url === '/') { 
-        $controller = new HomeController();
-        $controller->home();
+    // Début ArticleController
+    if ($url === '/admin/articles') {
+        $controller = new ArticleController();
+        $controller->list();
         exit();
     }
-    // Fin HomeController
 
-    // Début ContactController
-    if ($url === '/contact') {
-        $controller = new ContactController();
-        $controller->contact();
+    if (1 === preg_match('/^\/articles\/(?<id>\d+)$/', $url, $matches)) {
+        $controller = new ArticleController();
+        $controller->details($matches["id"]);
         exit();
     }
-    // Fin ContactController
+
+    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/comment\/insert$/', $url, $matches)) {
+        $controller = new CommentController();
+        $controller->insert($matches["id"]);
+        exit();
+    }
+
+    if ($url === '/admin/articles/insert') {
+        $controller = new ArticleController();
+        $controller->insert();
+        exit();
+    }
+
+    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/update$/', $url, $matches)) {
+        $controller = new ArticleController();
+        $controller->update($matches["id"]);
+        exit();
+    }
+
+    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/delete$/', $url, $matches)) { 
+        $controller = new ArticleController();
+        $controller->delete($matches["id"]);
+        exit();
+    }
+    // Fin ArticleController
 
     // Début AuthController    
     if ($url === '/register') {
@@ -54,43 +76,41 @@ Database::init();
     }
     // Fin AuthController
 
-    // Début ArticleController
-    if ($url === '/admin/articles') {
-        $controller = new ArticleController();
-        $controller->list();
-        exit();
-    }
-
-    if (1 === preg_match('/^\/articles\/(?<id>\d+)$/', $url, $matches)) {
-        $controller = new ArticleController();
-        $controller->details($matches["id"]);
-        exit();
-    }
-
-    if (1 === preg_match('/^\/articles\/(?<id>\d+)\/comment$/', $url, $matches)) {
+    // Début CommentController
+    if ($url === '/admin/comments') {
         $controller = new CommentController();
-        $controller->insert($matches["id"]);
+        $controller->waiting_list();
         exit();
     }
 
-    if ($url === '/admin/articles/insert') {
-        $controller = new ArticleController();
-        $controller->insert();
+    if (1 === preg_match('/^\/admin\/comments\/(?<id>\d+)\/validate$/', $url, $matches)) { 
+        $controller = new CommentController();
+        $controller->validate($matches["id"]);
         exit();
     }
 
-    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/update$/', $url, $matches)) {
-        $controller = new ArticleController();
-        $controller->update($matches["id"]);
+    if (1 === preg_match('/^\/admin\/comments\/(?<id>\d+)\/reject$/', $url, $matches)) { 
+        $controller = new CommentController();
+        $controller->reject($matches["id"]);
         exit();
     }
+    // Fin CommentController
 
-    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/delete$/', $url, $matches)) { 
-        $controller = new ArticleController();
-        $controller->delete($matches["id"]);
+    // Début ContactController
+    if ($url === '/contact') {
+        $controller = new ContactController();
+        $controller->contact();
         exit();
     }
-    // Fin ArticleController
+    // Fin ContactController
+
+    // Début HomeController
+    if ($url === '/') { 
+        $controller = new HomeController();
+        $controller->home();
+        exit();
+    }
+    // Fin HomeController
 
     // Début UserController
     if ($url === '/admin/users') {

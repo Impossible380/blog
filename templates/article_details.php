@@ -22,7 +22,7 @@
 
                 <h2>Commentaires</h2>
 
-                <form action="/articles/<?= $id; ?>/comment" method="post" class="row gy-4 mb-5">
+                <form action="/admin/articles/<?= $id; ?>/comment/insert" method="post" class="row gy-4 mb-5">
                     <div class="form-example">
                         <label for="content">Commentez cet article : </label>
                         <textarea name="content" id="content" rows="5" cols="33" class="form-control" required></textarea>
