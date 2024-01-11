@@ -7,8 +7,9 @@ class Article
     public $id;
     public $title;
     public $content;
+    public $creation_date;
+    public $last_update;
     public $author_id;
-    public $date;
     
     public User $user;
 
@@ -18,8 +19,9 @@ class Article
         $this->id = $row['id'];
         $this->title = $row['title'];
         $this->content = $row['content'];
+        $this->creation_date = $row['creation_date'];
+        $this->last_update = $row['last_update'];
         $this->author_id = $row['author_id'];
-        $this->date = $row['date'];
 
         // user
         $this->user = new User();

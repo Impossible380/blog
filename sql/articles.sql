@@ -3,8 +3,9 @@ CREATE TABLE `articles` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `title` varchar(255) NOT NULL,
     `content` text NOT NULL,
+    `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `author_id` int(11) NOT NULL,
-    `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
 );

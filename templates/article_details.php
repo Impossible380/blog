@@ -6,7 +6,7 @@
     <section>
 
         <div class="container">
-            <p class="text-primary">Créé le <?= $article->date ?></p>
+            <p class="text-primary">Créé le <?= $article->creation_date ?></p>
             <p><?= $article->content ?></p>
             <p class="text-primary text-end">Ecrit par <?= $user->firstname ?> <?= $user->lastname ?></p>
         </div>
@@ -32,14 +32,19 @@
                     </div>
                 </form>
 
-                <?php foreach($comments as $comment) { ?>
+                <div class="row gy-4">
+                    <?php foreach($comments as $comment) { ?>
 
-                    <div class="shadow rounded">
-                        <p class="fw-bold">De <?= $comment->user->firstname ?> <?= $comment->user->lastname ?> le <?= $comment->date ?></p>
-                        <p><?= $comment->content ?></p>
-                    </div>
+                        <div class="shadow rounded p-2">
+                            <p class="fw-bold">De <?= $comment->user->firstname ?> <?= $comment->user->lastname ?> le <?= $comment->date ?></p>
+                            <p><?= $comment->content ?></p>
+                            <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/delete">
+                                Supprimer
+                            </a>
+                        </div>
 
-                <?php } ?>
+                    <?php } ?>
+                </div>
 
             </div>
         </div>

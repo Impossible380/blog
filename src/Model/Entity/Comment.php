@@ -6,9 +6,9 @@ class Comment
 {
     public $id;
     public $content;
-    public $author_id;
-    public $article_id;
     public $date;
+    public $article_id;
+    public $author_id;
     public $status;
     
     public Article $article;
@@ -19,9 +19,9 @@ class Comment
         // comment
         $this->id = $row['id'];
         $this->content = $row['content'];
-        $this->author_id = $row['author_id'];
-        $this->article_id = $row['article_id'];
         $this->date = $row['date'];
+        $this->article_id = $row['article_id'];
+        $this->author_id = $row['author_id'];
         $this->status = $row['status'];
 
         // article

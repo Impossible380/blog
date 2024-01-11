@@ -39,7 +39,8 @@ class ArticleController
             $article->title = $_POST['title'];
             $article->content = $_POST['content'];
             $article->author_id = $_SESSION['user']->id;
-            $article->date = date("y-m-d H:i:s");
+            $article->creation_date = date("y-m-d H:i:s");
+            $article->last_update = date("y-m-d H:i:s");
 
             ArticleRepository::insert($article);
 
@@ -82,6 +83,7 @@ class ArticleController
             $article = new Article();
             $article->title = $_POST["title"];
             $article->content = $_POST["content"];
+            $article->last_update = date("y-m-d H:i:s");
 
             ArticleRepository::update($article);
 
@@ -119,14 +121,28 @@ class ArticleController
             exit();
         }
 
-        ArticleRepository::delete($id);
-        
-        $_SESSION["message"] = [
-            "type" => "success",
-            "text" => "L'article qui a comme id '" . $article->id . "' a bien été supprimé."
-        ];
+        $count_comments = CommentRepository::countByArticle($id);
 
-        header("location: /admin/articles");
-        exit();
+        if ($count_comments === 0) {
+            ArticleRepository::delete($id);
+            
+            $_SESSION["message"] = [
+                "type" => "success",
+                "text" => "L'article qui a comme id '" . $article->id . "' a bien été supprimé."
+            ];
+    
+            header("location: /admin/articles");
+            exit();
+        }
+
+        else {
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous ne pouvez pas supprimer cet article car il a encore $count_comments commentaire(s)."
+            ];
+
+            header("location: /admin/articles");
+            exit();
+        }
     }
 }

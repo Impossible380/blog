@@ -25,12 +25,6 @@ Database::init();
         exit();
     }
 
-    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/comment\/insert$/', $url, $matches)) {
-        $controller = new CommentController();
-        $controller->insert($matches["id"]);
-        exit();
-    }
-
     if ($url === '/admin/articles/insert') {
         $controller = new ArticleController();
         $controller->insert();
@@ -79,7 +73,7 @@ Database::init();
     // Début CommentController
     if ($url === '/admin/comments') {
         $controller = new CommentController();
-        $controller->waiting_list();
+        $controller->list();
         exit();
     }
 
@@ -92,6 +86,18 @@ Database::init();
     if (1 === preg_match('/^\/admin\/comments\/(?<id>\d+)\/reject$/', $url, $matches)) { 
         $controller = new CommentController();
         $controller->reject($matches["id"]);
+        exit();
+    }
+
+    if (1 === preg_match('/^\/admin\/articles\/(?<id>\d+)\/comment\/insert$/', $url, $matches)) {
+        $controller = new CommentController();
+        $controller->insert($matches["id"]);
+        exit();
+    }
+
+    if (1 === preg_match('/^\/admin\/comments\/(?<id>\d+)\/delete$/', $url, $matches)) {
+        $controller = new CommentController();
+        $controller->delete($matches["id"]);
         exit();
     }
     // Fin CommentController

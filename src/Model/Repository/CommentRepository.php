@@ -10,13 +10,64 @@ class CommentRepository
     static function getBasicSelectQuery()
     {
         return "SELECT
-                    `comments`.`id`, `comments`.`content`, `comments`.`article_id`, `comments`.`author_id`, `comments`.`date`, `comments`.`status`,
+                    `comments`.`id`, `comments`.`content`, `comments`.`date`, `comments`.`article_id`, `comments`.`author_id`, `comments`.`status`,
                     `articles`.`title`,
                     `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`
                 FROM
                     `comments`
                 JOIN `users` ON `comments`.`author_id` = `users`.`id`
                 JOIN `articles` ON `comments`.`article_id` = `articles`.`id`";
+    }
+
+    static function countByArticle(int $article_id):int {
+        $query = Database::get()->prepare("SELECT
+                                                COUNT(*) AS `user_comment_number`,
+                                                'test' AS `Test`
+                                            FROM
+                                                `comments`
+                                            WHERE
+                                                `comments`.`article_id` = :article_id");
+        
+        $query->execute([
+            ":article_id" => $article_id
+        ]);
+        
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return intval($result['user_comment_number']); // nombre de commentaires de l'article n° $article_id
+    }
+
+    static function countByUser(int $user_id):int {
+        $query = Database::get()->prepare("SELECT
+                                                COUNT(*) AS `article_comment_number`,
+                                                'test' AS `Test`
+                                            FROM
+                                                `comments`
+                                            WHERE
+                                                `comments`.`author_id` = :user_id");
+        
+        $query->execute([
+            ":user_id" => $user_id
+        ]);
+        
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return intval($result['article_comment_number']); // nombre de commentaires de l'utilisateur n° $user_id
+    }
+
+    static function findAll()
+    {
+        $query = Database::get()->query(self::getBasicSelectQuery());
+
+        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $comments = array_map(function ($row) {
+            $comment = new Comment();
+            $comment->fromSQL($row);
+            return $comment;
+        }, $result);
+
+        return $comments;
     }
 
     static function findAllOfArticle(int $article_id)
@@ -45,20 +96,24 @@ class CommentRepository
         return $comments;
     }
 
-    static function findWaiting()
+    static function findOneById(int $id)
     {
-        $query = Database::get()->query(self::getBasicSelectQuery() . "
-                                        WHERE `comments`.`status` = 'waiting'");
+        $query = Database::get()->prepare(self::getBasicSelectQuery() . "
+                                            WHERE
+                                                `comments`.`id` = :id");
 
-        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $query->execute([":id" => $id]);
 
-        $comments = array_map(function ($row) {
-            $comment = new Comment();
-            $comment->fromSQL($row);
-            return $comment;
-        }, $result);
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
 
-        return $comments;
+        if (!$row) {
+            return null;
+        }
+
+        $comment = new Comment();
+        $comment->fromSQL($row);
+
+        return $comment;
     }
 
     static function validate($id)
@@ -93,21 +148,6 @@ class CommentRepository
             ":article_id" => $comment->article_id,
             ":author_id" => $comment->author_id,
             ":date" => $comment->date,
-        ]);
-    }
-
-    static function update(Comment $comment)
-    {
-        $query = Database::get()->prepare("UPDATE
-                                                `comments`
-                                            SET
-                                                `content` = :content
-                                            WHERE
-                                                `id` = :id");
-
-        $query->execute([
-            ":id" => $comment->id,
-            ":content" => $comment->content,
         ]);
     }
 

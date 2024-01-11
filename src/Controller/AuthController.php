@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Entity\User;
 use App\Model\Repository\ArticleRepository;
+use App\Model\Repository\CommentRepository;
 use App\Model\Repository\ConditionRepository;
 use App\Model\Repository\UserRepository;
 
@@ -95,7 +96,7 @@ class AuthController
     {
         ConditionRepository::userConnected();
 
-        /// récuperer l'article dans la bdd grace à l'id $_GET['id']
+        /// récuperer le user dans la bdd grace à l'id $_GET['id']
 
         $user = UserRepository::findOneById($id);
 
@@ -109,9 +110,10 @@ class AuthController
             exit();
         }
 
-        $count = ArticleRepository::countByUser($id);
+        $count_articles = ArticleRepository::countByUser($id);
+        $count_comments = CommentRepository::countByUser($id);
 
-        if ($count === 0) {
+        if ($count_articles === 0 && $count_comments === 0) {
             UserRepository::delete($id);
     
             if ($_SESSION["user_connected"]) {
@@ -131,7 +133,7 @@ class AuthController
         else {
             $_SESSION["message"] = [
                 "type" => "danger",
-                "text" => "Vous ne pouvez pas supprimer votre compte car vous avez encore $count article(s)."
+                "text" => "Vous ne pouvez pas supprimer votre compte car vous avez encore $count_articles article(s) et $count_comments commentaire(s)."
             ];
 
             header("location: /admin/users");

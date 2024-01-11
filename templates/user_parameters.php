@@ -6,7 +6,9 @@
     <section>
 
         <div class="container">
-            <?php dump($user); ?>
+            <p>Prénom : <?= $user->firstname; ?></p>
+            <p>Nom : <?= $user->lastname; ?></p>
+            <p>Email : <?= $user->email; ?></p>
 
             <a class="btn btn-primary" href="/admin/users/<?= $user->id; ?>/update" role="button">
                 Modifier le compte

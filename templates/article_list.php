@@ -14,9 +14,9 @@
                             <th class="border-2 border-secondary p-2">id</th>
                             <th class="border-2 border-secondary p-2">titre</th>
                             <th class="border-2 border-secondary p-2">contenu</th>
-                            <th class="border-2 border-secondary p-2">date</th>
-                            <th class="border-2 border-secondary p-2">prénom</th>
-                            <th class="border-2 border-secondary p-2">nom</th>
+                            <th class="border-2 border-secondary p-2">date de création</th>
+                            <th class="border-2 border-secondary p-2">dernière modification</th>
+                            <th class="border-2 border-secondary p-2">auteur</th>
                             <th class="border-2 border-secondary p-2">options</th>
                         </tr>
                     </thead>
@@ -37,12 +37,13 @@
                                     <?= $article->content; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?= $article->date; ?>
+                                    <?= $article->creation_date; ?>
+                                </td>
+                                <td class="border-2 border-secondary p-2">
+                                    <?= $article->last_update; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
                                     <?= $article->user->firstname; ?>
-                                </td>
-                                <td class="border-2 border-secondary p-2">
                                     <?= $article->user->lastname; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">

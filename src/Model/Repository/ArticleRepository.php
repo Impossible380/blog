@@ -7,28 +7,10 @@ use App\Service\Database;
 
 class ArticleRepository
 {
-    static function countByUser(int $user_id):int {
-        $query = Database::get()->prepare("SELECT
-                                                COUNT(*) AS `article_number`,
-                                                'test' AS `Test`
-                                            FROM
-                                                `articles`
-                                            WHERE
-                                                `articles`.`author_id` = :user_id");
-        
-        $query->execute([
-            ":user_id" => $user_id
-        ]);
-        
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
-
-        return intval($result['article_number']); // nombre d'articles de l'utilisateur n° $user_id
-    }
-
     static function getBasicSelectQuery()
     {
         return "SELECT
-                    `articles`.`id`, `articles`.`title`, `articles`.`content`, `articles`.`date`, `articles`.`author_id`, 
+                    `articles`.`id`, `articles`.`title`, `articles`.`content`, `articles`.`creation_date`, `articles`.`last_update`, `articles`.`author_id`, 
                     `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`, `users`.`status`
                 FROM
                     `articles`
@@ -53,6 +35,24 @@ class ArticleRepository
         }, $result);
 
         return $articles;
+    }
+
+    static function countByUser(int $user_id):int {
+        $query = Database::get()->prepare("SELECT
+                                                COUNT(*) AS `user_article_number`,
+                                                'test' AS `Test`
+                                            FROM
+                                                `articles`
+                                            WHERE
+                                                `articles`.`author_id` = :user_id");
+        
+        $query->execute([
+            ":user_id" => $user_id
+        ]);
+        
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return intval($result['user_article_number']); // nombre d'articles de l'utilisateur n° $user_id
     }
 
     static function findLatest()
@@ -105,14 +105,15 @@ class ArticleRepository
 
     static function insert(Article $article)
     {
-        $query = Database::get()->prepare("INSERT INTO `articles`(`title`, `content`, `author_id`, `date`)
-                                            VALUES(:title, :content, :author_id, :date)");
+        $query = Database::get()->prepare("INSERT INTO `articles`(`title`, `content`, `creation_date`, `last_update`, `author_id`)
+                                            VALUES(:title, :content, :creation_date, :last_update, :author_id)");
 
         $query->execute([
             ":title" => $article->title,
             ":content" => $article->content,
-            ":author_id" => $article->author_id,
-            ":date" => $article->date,
+            ":creation_date" => $article->creation_date,
+            ":last_update" => $article->last_update,
+            ":author_id" => $article->author_id
         ]);
     }
 
@@ -122,7 +123,8 @@ class ArticleRepository
                                                 `articles`
                                             SET
                                                 `title` = :title,
-                                                `content` = :content
+                                                `content` = :content,
+                                                `last_update` = :last_update
                                             WHERE
                                                 `id` = :id");
 
@@ -130,6 +132,7 @@ class ArticleRepository
             ":id" => $article->id,
             ":title" => $article->title,
             ":content" => $article->content,
+            ":last_update" => $article->last_update
         ]);
     }
 

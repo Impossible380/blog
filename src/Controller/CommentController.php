@@ -8,11 +8,11 @@ use App\Model\Repository\ConditionRepository;
 
 class CommentController
 {
-    function waiting_list()
+    function list()
     {
-        $comments = CommentRepository::findWaiting();
+        $comments = CommentRepository::findAll();
 
-        require("../templates/comment_waiting.php");
+        require("../templates/comment_list.php");
     }
 
     function validate($id)
@@ -64,6 +64,35 @@ class CommentController
         CommentRepository::insert($comment);
 
         header("location: /articles/$article_id");
+        exit();
+    }
+
+    function delete($id)
+    {
+        ConditionRepository::userConnected();
+
+        /// récuperer l'article dans la bdd grace à l'id $_GET['id']
+
+        $comment = CommentRepository::findOneById($id);
+
+        if ($comment->author_id !== $_SESSION["user"]->id) {
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas l'auteur de ce commentaire."
+            ];
+
+            header("location: /articles/$comment->article_id");
+            exit();
+        }
+
+        CommentRepository::delete($id);
+        
+        $_SESSION["message"] = [
+            "type" => "success",
+            "text" => "Le commentaire qui a comme id '" . $comment->id . "' a bien été supprimé."
+        ];
+
+        header("location: /articles/$comment->article_id");
         exit();
     }
 }
