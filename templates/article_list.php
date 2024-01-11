@@ -47,12 +47,14 @@
                                     <?= $article->user->lastname; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <a class="text-secondary" href="/admin/articles/<?= $article->id; ?>/update">
-                                        Modifier</a>
-                                    /
-                                    <a class="text-danger" href="/admin/articles/<?= $article->id; ?>/delete">
-                                        Supprimer
-                                    </a>
+                                    <?php if ($article->author_id === $_SESSION["user"]->id) { ?>
+                                        <a class="text-secondary" href="/admin/articles/<?= $article->id; ?>/update">
+                                            Modifier</a>
+                                        /
+                                        <a class="text-danger" href="/admin/articles/<?= $article->id; ?>/delete">
+                                            Supprimer
+                                        </a>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php } ?>

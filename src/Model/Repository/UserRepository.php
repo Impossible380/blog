@@ -11,7 +11,7 @@ class UserRepository
     {
         return "SELECT
                     `users`.`id`, `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`status`,
-                    ". ($needsPassword ? "`users`.`password`" : "NULL") ." AS password
+                    ". ($needsPassword ? "`users`.`password`" : "NULL") ." AS `password`
                 FROM
                     `users`";
     }

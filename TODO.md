@@ -159,7 +159,27 @@ Modifier toutes les requêtes pour que ce soit des requêtes préparées
 -->Controller
 -->Repository
 -->Template
-
 # Prochaines sessions
 * Afficher en plus jolie la page User Parameter
-* Corriger le problème du password qui s'affiche sur la page article_details
+
+# 11/01/2023
+## Réalisé
+* Gérer la validation des commentaires
+/admin/comments --> liste des commentaires à valider
+/admin/comments/:id/validate --> action qui valide le commentaire et qui redirige vers /admin/comments
+/admin/comments/:id/reject --> action qui refuse le commentaire et qui redirige vers /admin/comments
+-->app.php (routeur)
+-->Controller
+-->Repository
+-->Template
+* Afficher en plus jolie la page User Parameter OK
+## Pendant la session
+* Debug la liste des commentaires
+==> il y avait des champs dans l'entité article qu'on ne fournissait pas avec la requête des commentaires
+# A faire
+* Gestion de la validation des utilisateurs
+* Quand un user s'inscrit, il doit être au statut waiting
+* Il ne faut pas que le user puisse se connecter si il n'est pas validé
+* Dans la partie admin, il faut pouvoir validé ou refuser un utilisateur (un peu le même principe qu'avec les commentaires.)
+* Dans le cas d'un refus, on peut supprimer l'utilisateur.
+# Prochaines sessions

@@ -38,9 +38,13 @@
                         <div class="shadow rounded p-2">
                             <p class="fw-bold">De <?= $comment->user->firstname ?> <?= $comment->user->lastname ?> le <?= $comment->date ?></p>
                             <p><?= $comment->content ?></p>
-                            <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/delete">
-                                Supprimer
-                            </a>
+                            <p>
+                                <?php if ($comment->author_id === $_SESSION["user"]->id) { ?>
+                                    <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/delete">
+                                        Supprimer
+                                    </a>
+                                <?php } ?>
+                            </p>
                         </div>
 
                     <?php } ?>

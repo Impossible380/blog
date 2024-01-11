@@ -11,8 +11,7 @@ class CommentRepository
     {
         return "SELECT
                     `comments`.`id`, `comments`.`content`, `comments`.`date`, `comments`.`article_id`, `comments`.`author_id`, `comments`.`status`,
-                    `articles`.`title`,
-                    `users`.`firstname`, `users`.`lastname`, `users`.`email`, `users`.`password`
+                    `users`.`firstname`, `users`.`lastname`
                 FROM
                     `comments`
                 JOIN `users` ON `comments`.`author_id` = `users`.`id`
@@ -21,7 +20,7 @@ class CommentRepository
 
     static function countByArticle(int $article_id):int {
         $query = Database::get()->prepare("SELECT
-                                                COUNT(*) AS `user_comment_number`,
+                                                COUNT(*) AS `article_comment_number`,
                                                 'test' AS `Test`
                                             FROM
                                                 `comments`
@@ -34,12 +33,12 @@ class CommentRepository
         
         $result = $query->fetch(\PDO::FETCH_ASSOC);
 
-        return intval($result['user_comment_number']); // nombre de commentaires de l'article n° $article_id
+        return intval($result['article_comment_number']); // nombre de commentaires de l'article n° $article_id
     }
 
     static function countByUser(int $user_id):int {
         $query = Database::get()->prepare("SELECT
-                                                COUNT(*) AS `article_comment_number`,
+                                                COUNT(*) AS `user_comment_number`,
                                                 'test' AS `Test`
                                             FROM
                                                 `comments`
@@ -52,7 +51,7 @@ class CommentRepository
         
         $result = $query->fetch(\PDO::FETCH_ASSOC);
 
-        return intval($result['article_comment_number']); // nombre de commentaires de l'utilisateur n° $user_id
+        return intval($result['user_comment_number']); // nombre de commentaires de l'utilisateur n° $user_id
     }
 
     static function findAll()
@@ -140,14 +139,14 @@ class CommentRepository
 
     static function insert(Comment $comment)
     {
-        $query = Database::get()->prepare("INSERT INTO `comments`(`content`, `article_id`, `author_id`, `date`)
-                                            VALUES(:content, :article_id, :author_id, :date)");
+        $query = Database::get()->prepare("INSERT INTO `comments`(`content`, `date`, `article_id`, `author_id`)
+                                            VALUES(:content, :date, :article_id, :author_id)");
 
         $query->execute([
             ":content" => $comment->content,
+            ":date" => $comment->date,
             ":article_id" => $comment->article_id,
             ":author_id" => $comment->author_id,
-            ":date" => $comment->date,
         ]);
     }
 

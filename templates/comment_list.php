@@ -40,16 +40,27 @@
                                 <td class="border-2 border-secondary p-2">
                                     <?= $comment->user->lastname; ?>
                                 </td>
-                                <td class="border-2 border-secondary p-2">
+
+                                <?php if ($comment->status === 'accepted') {
+                                    $text_color = 'success';
+                                } else if ($comment->status === 'waiting') {
+                                    $text_color = 'secondary';
+                                } else {
+                                    $text_color = 'danger';
+                                } ?>
+
+                                <td class="border-2 border-secondary p-2 text-<?= $text_color ?>">
                                     <?= $comment->status; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2 justify-content-between">
-                                    <a class="text-success" href="/admin/comments/<?= $comment->id; ?>/validate">
-                                        Valider</a>
-                                    /
-                                    <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/reject">
-                                        Rejeter
-                                    </a>
+                                    <?php if ($comment->status === 'waiting') { ?>
+                                        <a class="text-success" href="/admin/comments/<?= $comment->id; ?>/validate">
+                                            Valider</a>
+                                        /
+                                        <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/reject">
+                                            Rejeter
+                                        </a>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php } ?>

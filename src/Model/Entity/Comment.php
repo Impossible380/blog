@@ -11,7 +11,6 @@ class Comment
     public $author_id;
     public $status;
     
-    public Article $article;
     public User $user;
 
     function fromSQL($row)
@@ -25,10 +24,7 @@ class Comment
         $this->status = $row['status'];
 
         // article
-        $this->article = new Article();
-        $article_data = $row;
-        $article_data["id"] = $row['article_id'];
-        $this->article->fromSQL($article_data);
+        // Pas besoin de rattacher l'article au commentaire car on ne l'utilise pas dans le template
 
         // user
         $this->user = new User();

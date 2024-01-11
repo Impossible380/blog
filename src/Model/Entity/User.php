@@ -9,11 +9,13 @@ class User {
     public $email;
     public $password;
 
-    function fromSQL($row) {
-        $this->id = $row['id'];
-        $this->firstname = $row['firstname'];
-        $this->lastname = $row['lastname'];
-        $this->email = $row['email'];
-        $this->password = $row['password'];
+    function fromSQL($row)
+    {
+        // user
+        $this->id = $row['id'] ?? '';
+        $this->firstname = $row['firstname'] ?? '';
+        $this->lastname = $row['lastname'] ?? '';
+        $this->email = $row['email'] ?? '';
+        $this->password = $row['password'] ?? '';
     }
 }
