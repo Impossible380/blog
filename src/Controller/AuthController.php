@@ -13,8 +13,13 @@ class AuthController
     function register()
     {
         if ($_SESSION["user_connected"]) {
-            header("location: /");
-            exit();
+            if ($_SESSION["user"]->status === 'accepted') {
+                header("location: /");
+                exit();
+            } else if ($_SESSION["user"]->status === 'waiting') {
+                header("location: /waiting");
+                exit();
+            }
         }
 
         if (!empty($_POST)) {
@@ -29,6 +34,15 @@ class AuthController
             $_SESSION["user"] = $user;
             $_SESSION["user_connected"] = true;
 
+            header("location: /waiting");
+            exit();
+        }
+
+        require("../templates/register.php");
+    }
+
+    function waiting() {
+        if ($_SESSION["user"]->status === 'accepted') {
             $_SESSION["message"] = [
                 "type" => "info",
                 "text" => "Bonjour et bienvenue sur Parker Press pour votre première."
@@ -38,14 +52,19 @@ class AuthController
             exit();
         }
 
-        require("../templates/register.php");
+        require("../templates/waiting.php");
     }
 
     function login()
     {
         if ($_SESSION["user_connected"]) {
-            header("location: /");
-            exit();
+            if ($_SESSION["user"]->status === 'accepted') {
+                header("location: /");
+                exit();
+            } else if ($_SESSION["user"]->status === 'waiting') {
+                header("location: /waiting");
+                exit();
+            }
         }
 
         if (!empty($_POST)) {
@@ -66,7 +85,7 @@ class AuthController
 
             $_SESSION["message"] = [
                 "type" => "info",
-                "text" => "Bonjour et bienvenue sur Parker Press pour votre retour."
+                "text" => "Bonjour et bienvenue sur Parker Press."
             ];
 
             header("location: /");

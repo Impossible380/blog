@@ -14,6 +14,14 @@ class ConditionRepository
 
             header("location: /login");
             exit();
+        } else if ($_SESSION["user"]->status !== 'accepted') {
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'avez pas encore été admis."
+            ];
+
+            header("location: /waiting");
+            exit();
         }
     }
 }

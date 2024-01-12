@@ -71,6 +71,28 @@ class UserRepository
         return $user;
     }
 
+    static function validate($id)
+    {
+        $query = Database::get()->prepare("UPDATE `users`
+                                            SET `users`.`status` = 'accepted'
+                                            WHERE `id` = :id");
+
+        $query->execute([
+            ":id" => $id
+        ]);
+    }
+
+    static function reject($id)
+    {
+        $query = Database::get()->prepare("UPDATE `users`
+                                            SET `users`.`status` = 'rejected'
+                                            WHERE `id` = :id");
+
+        $query->execute([
+            ":id" => $id
+        ]);
+    }
+
     static function insert(User $user)
     {
         $query = Database::get()->prepare("INSERT INTO `users`(`firstname`, `lastname`, `email`, `password`)

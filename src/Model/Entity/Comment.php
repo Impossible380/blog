@@ -11,20 +11,24 @@ class Comment
     public $author_id;
     public $status;
     
+    public Article $article;
     public User $user;
 
     function fromSQL($row)
     {
         // comment
-        $this->id = $row['id'];
-        $this->content = $row['content'];
-        $this->date = $row['date'];
-        $this->article_id = $row['article_id'];
-        $this->author_id = $row['author_id'];
-        $this->status = $row['status'];
+        $this->id = $row['id'] ?? '';
+        $this->content = $row['content'] ?? '';
+        $this->date = $row['date'] ?? '';
+        $this->article_id = $row['article_id'] ?? '';
+        $this->author_id = $row['author_id'] ?? '';
+        $this->status = $row['status'] ?? '';
 
         // article
-        // Pas besoin de rattacher l'article au commentaire car on ne l'utilise pas dans le template
+        $this->article = new Article();
+        $article_data = $row;
+        $article_data["id"] = $row['author_id'];
+        $this->article->fromSQL($article_data);
 
         // user
         $this->user = new User();

@@ -8,13 +8,15 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                <table class="w-25">
+                <table>
                     <thead class="text-center">
                         <tr>
                             <th class="border-2 border-secondary p-2">id</th>
                             <th class="border-2 border-secondary p-2">prénom</th>
                             <th class="border-2 border-secondary p-2">nom</th>
                             <th class="border-2 border-secondary p-2">email</th>
+                            <th class="border-2 border-secondary p-2">statut</th>
+                            <th class="border-2 border-secondary p-2">options</th>
                         </tr>
                     </thead>
 
@@ -23,16 +25,38 @@
                         <?php foreach($users as $user) { ?>
                             <tr>
                                 <td class="border-2 border-secondary p-2 text-center">
-                                    <?php echo $user->id; ?>
+                                    <?= $user->id; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?php echo $user->firstname; ?>
+                                    <?= $user->firstname; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?php echo $user->lastname; ?>
+                                    <?= $user->lastname; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2">
-                                    <?php echo $user->email; ?>
+                                    <?= $user->email; ?>
+                                </td>
+
+                                <?php if ($user->status === 'accepted') {
+                                    $text_color = 'success';
+                                } else if ($user->status === 'waiting') {
+                                    $text_color = 'secondary';
+                                } else {
+                                    $text_color = 'danger';
+                                } ?>
+
+                                <td class="border-2 border-secondary p-2 text-<?= $text_color; ?>">
+                                    <?= $user->status; ?>
+                                </td>
+                                <td class="border-2 border-secondary p-2 justify-content-between">
+                                    <?php if ($user->status === 'waiting') { ?>
+                                        <a class="text-success" href="/admin/users/<?= $user->id; ?>/validate">
+                                            Valider</a>
+                                        /
+                                        <a class="text-danger" href="/admin/users/<?= $user->id; ?>/reject">
+                                            Rejeter
+                                        </a>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php } ?>

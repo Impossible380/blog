@@ -49,15 +49,15 @@
                                     $text_color = 'danger';
                                 } ?>
 
-                                <td class="border-2 border-secondary p-2 text-<?= $text_color ?>">
+                                <td class="border-2 border-secondary p-2 text-<?= $text_color; ?>">
                                     <?= $comment->status; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2 justify-content-between">
-                                    <?php if ($comment->status === 'waiting') { ?>
-                                        <a class="text-success" href="/admin/comments/<?= $comment->id; ?>/validate">
+                                    <?php if ($comment->status === 'waiting' && $comment->article->author_id === $_SESSION["user"]->id) { ?>
+                                        <a class="text-success" href="/admin/articles/<?= $comment->article_id; ?>/comments/<?= $comment->id; ?>/validate">
                                             Valider</a>
                                         /
-                                        <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/reject">
+                                        <a class="text-danger" href="/admin/articles/<?= $comment->article_id; ?>/comments/<?= $comment->id; ?>/reject">
                                             Rejeter
                                         </a>
                                     <?php } ?>
@@ -74,7 +74,7 @@
     </section>
     <!-- Fin SECTION -->
 
-    <?php $title = "Liste des articles"; ?>
+    <?php $title = "Liste des commentaires"; ?>
 
 <?php $content = ob_get_clean(); ?>
 

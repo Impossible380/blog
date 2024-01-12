@@ -16,12 +16,12 @@ class Article
     function fromSQL($row)
     {
         // article
-        $this->id = $row['id'];
-        $this->title = $row['title'];
-        $this->content = $row['content'];
-        $this->creation_date = $row['creation_date'];
-        $this->last_update = $row['last_update'];
-        $this->author_id = $row['author_id'];
+        $this->id = $row['id'] ?? '';
+        $this->title = $row['title'] ?? '';
+        $this->content = $row['content'] ?? '';
+        $this->creation_date = $row['creation_date'] ?? '';
+        $this->last_update = $row['last_update'] ?? '';
+        $this->author_id = $row['author_id'] ?? '';
 
         // user
         $this->user = new User();

@@ -51,6 +51,12 @@ Database::init();
         exit();
     }
 
+    if ($url === '/waiting') {
+        $controller = new AuthController();
+        $controller->waiting();
+        exit();
+    }
+
     if ($url === '/login') { 
         $controller = new AuthController();
         $controller->login();
@@ -77,15 +83,15 @@ Database::init();
         exit();
     }
 
-    if (1 === preg_match('/^\/admin\/comments\/(?<id>\d+)\/validate$/', $url, $matches)) { 
+    if (1 === preg_match('/^\/admin\/articles\/(?<article_id>\d+)\/comments\/(?<comment_id>\d+)\/validate$/', $url, $matches)) { 
         $controller = new CommentController();
-        $controller->validate($matches["id"]);
+        $controller->validate($matches["article_id"], $matches["comment_id"]);
         exit();
     }
 
-    if (1 === preg_match('/^\/admin\/comments\/(?<id>\d+)\/reject$/', $url, $matches)) { 
+    if (1 === preg_match('/^\/admin\/articles\/(?<article_id>\d+)\/comments\/(?<comment_id>\d+)\/reject$/', $url, $matches)) { 
         $controller = new CommentController();
-        $controller->reject($matches["id"]);
+        $controller->reject($matches["article_id"], $matches["comment_id"]);
         exit();
     }
 
@@ -122,6 +128,18 @@ Database::init();
     if ($url === '/admin/users') {
         $controller = new UserController();
         $controller->list();
+        exit();
+    }
+
+    if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)\/validate$/', $url, $matches)) { 
+        $controller = new UserController();
+        $controller->validate($matches["id"]);
+        exit();
+    }
+
+    if (1 === preg_match('/^\/admin\/users\/(?<id>\d+)\/reject$/', $url, $matches)) { 
+        $controller = new UserController();
+        $controller->reject($matches["id"]);
         exit();
     }
 

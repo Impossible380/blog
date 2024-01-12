@@ -8,6 +8,7 @@ class User {
     public $lastname;
     public $email;
     public $password;
+    public $status;
 
     function fromSQL($row)
     {
@@ -17,5 +18,6 @@ class User {
         $this->lastname = $row['lastname'] ?? '';
         $this->email = $row['email'] ?? '';
         $this->password = $row['password'] ?? '';
+        $this->status = $row['status'] ?? '';
     }
 }

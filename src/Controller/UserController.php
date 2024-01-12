@@ -17,6 +17,38 @@ class UserController
         require("../templates/user_list.php");
     }
 
+    function validate($id)
+    {
+        ConditionRepository::userConnected();
+
+        UserRepository::validate($id);
+
+        $_SESSION["message"] = [
+            "type" => "success",
+            "text" => "Utilisateur validé."
+        ];
+
+        header("location: /admin/users");
+        exit();
+    }
+
+    function reject($id)
+    {
+        ConditionRepository::userConnected();
+        
+        UserRepository::reject($id);
+
+        $_SESSION["message"] = [
+            "type" => "danger",
+            "text" => "Utilisateur rejeté."
+        ];
+
+        UserRepository::delete($id);
+
+        header("location: /admin/users");
+        exit();
+    }
+
     function parameters($id)
     {
         ConditionRepository::userConnected();
