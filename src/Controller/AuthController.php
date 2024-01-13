@@ -13,13 +13,8 @@ class AuthController
     function register()
     {
         if ($_SESSION["user_connected"]) {
-            if ($_SESSION["user"]->status === 'accepted') {
-                header("location: /");
-                exit();
-            } else if ($_SESSION["user"]->status === 'waiting') {
-                header("location: /waiting");
-                exit();
-            }
+            header("location: /");
+            exit();
         }
 
         if (!empty($_POST)) {
@@ -34,37 +29,30 @@ class AuthController
             $_SESSION["user"] = $user;
             $_SESSION["user_connected"] = true;
 
-            header("location: /waiting");
+            if ($_SESSION["user"]->status === 'accepted') {
+                $_SESSION["message"] = [
+                    "type" => "info",
+                    "text" => "Bonjour et bienvenue sur Parker Press."
+                ];
+            } else if ($_SESSION["user"]->status === 'waiting') {
+                $_SESSION["message"] = [
+                    "type" => "info",
+                    "text" => "En attente de validation ou de rejet."
+                ];
+            }
+
+            header("location: /");
             exit();
         }
 
         require("../templates/register.php");
     }
 
-    function waiting() {
-        if ($_SESSION["user"]->status === 'accepted') {
-            $_SESSION["message"] = [
-                "type" => "info",
-                "text" => "Bonjour et bienvenue sur Parker Press pour votre première."
-            ];
-
-            header("location: /");
-            exit();
-        }
-
-        require("../templates/waiting.php");
-    }
-
     function login()
     {
         if ($_SESSION["user_connected"]) {
-            if ($_SESSION["user"]->status === 'accepted') {
-                header("location: /");
-                exit();
-            } else if ($_SESSION["user"]->status === 'waiting') {
-                header("location: /waiting");
-                exit();
-            }
+            header("location: /");
+            exit();
         }
 
         if (!empty($_POST)) {
@@ -83,10 +71,17 @@ class AuthController
             $_SESSION["user"] = $user;
             $_SESSION["user_connected"] = true;
 
-            $_SESSION["message"] = [
-                "type" => "info",
-                "text" => "Bonjour et bienvenue sur Parker Press."
-            ];
+            if ($_SESSION["user"]->status === 'accepted') {
+                $_SESSION["message"] = [
+                    "type" => "info",
+                    "text" => "Bonjour et bienvenue sur Parker Press."
+                ];
+            } else if ($_SESSION["user"]->status === 'waiting') {
+                $_SESSION["message"] = [
+                    "type" => "info",
+                    "text" => "En attente de validation ou de rejet."
+                ];
+            }
 
             header("location: /");
             exit();
@@ -134,22 +129,20 @@ class AuthController
 
         if ($count_articles === 0 && $count_comments === 0) {
             UserRepository::delete($id);
-    
+
             if ($_SESSION["user_connected"]) {
                 $_SESSION["message"] = [
                     "type" => "info",
                     "text" => "Merci d'être venu sur Parker Press et bonne continuation !"
                 ];
-    
+
                 $_SESSION["user_connected"] = false;
                 $_SESSION["user"] = null;
             }
-    
+
             header("location: /");
             exit();
-        }
-
-        else {
+        } else {
             $_SESSION["message"] = [
                 "type" => "danger",
                 "text" => "Vous ne pouvez pas supprimer votre compte car vous avez encore $count_articles article(s) et $count_comments commentaire(s)."

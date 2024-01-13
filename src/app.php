@@ -51,12 +51,6 @@ Database::init();
         exit();
     }
 
-    if ($url === '/waiting') {
-        $controller = new AuthController();
-        $controller->waiting();
-        exit();
-    }
-
     if ($url === '/login') { 
         $controller = new AuthController();
         $controller->login();

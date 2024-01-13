@@ -27,7 +27,8 @@ class Comment
         // article
         $this->article = new Article();
         $article_data = $row;
-        $article_data["id"] = $row['author_id'];
+        $article_data["id"] = $row['article_id'];
+        $article_data["author_id"] = $row['article_author_id'];
         $this->article->fromSQL($article_data);
 
         // user

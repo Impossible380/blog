@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container">
         
         <img src="/images/logo.jpg" id="logo">
@@ -24,6 +24,12 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
 
                 <?php if ($_SESSION["user_connected"]) { ?>
+
+                    <?php if ($_SESSION["user"]->status === 'waiting') { ?>
+                        <li class="nav-item border border-dark">
+                            <a class="nav-link text-secondary">En attente</a>
+                        </li>
+                    <?php } ?>
 
                     <li class="nav-item dropdown bg-dark">
                         <a class="nav-link dropdown-toggle text-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

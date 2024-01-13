@@ -108,10 +108,6 @@ class CommentController
 
         $comment = CommentRepository::findOneById($id);
 
-        var_dump($comment->author_id, $_SESSION["user"]->id);
-        var_dump($comment->article->author_id);
-        exit();
-
         if ($comment->author_id !== $_SESSION["user"]->id) {
             $_SESSION["message"] = [
                 "type" => "danger",

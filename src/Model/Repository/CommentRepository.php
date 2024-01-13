@@ -11,7 +11,7 @@ class CommentRepository
     {
         return "SELECT
                     `comments`.`id`, `comments`.`content`, `comments`.`date`, `comments`.`article_id`, `comments`.`author_id`, `comments`.`status`,
-                    `articles`.`title`,
+                    `articles`.`title`, `articles`.`author_id` AS `article_author_id`,
                     `users`.`firstname`, `users`.`lastname`
                 FROM
                     `comments`

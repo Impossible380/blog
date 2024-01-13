@@ -20,7 +20,7 @@ class ConditionRepository
                 "text" => "Vous n'avez pas encore été admis."
             ];
 
-            header("location: /waiting");
+            header("location: /");
             exit();
         }
     }

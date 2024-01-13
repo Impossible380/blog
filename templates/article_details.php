@@ -39,9 +39,7 @@
                             <p class="fw-bold">De <?= $comment->user->firstname ?> <?= $comment->user->lastname ?> le <?= $comment->date ?></p>
                             <p><?= $comment->content ?></p>
                             <p>
-                                <?php
-                                var_dump($comment->author_id, $comment->article->author_id, $_SESSION["user"]->id);
-                                if ($comment->author_id === $_SESSION["user"]->id) { ?>
+                                <?php if ($comment->author_id === $_SESSION["user"]->id || $article->author_id === $_SESSION["user"]->id) { ?>
                                     <a class="text-danger" href="/admin/comments/<?= $comment->id; ?>/delete">
                                         Supprimer
                                     </a>
