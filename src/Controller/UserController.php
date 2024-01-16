@@ -21,6 +21,16 @@ class UserController
     {
         ConditionRepository::userConnected();
 
+        if ($_SESSION["user"]->id !== "1") {
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas l'administrateur du site."
+            ];
+
+            header("location: /admin/users");
+            exit();
+        }
+
         UserRepository::validate($id);
 
         $_SESSION["message"] = [
@@ -35,6 +45,16 @@ class UserController
     function reject($id)
     {
         ConditionRepository::userConnected();
+
+        if ($_SESSION["user"]->id !== "1") {
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous n'êtes pas l'administrateur du site."
+            ];
+
+            header("location: /admin/users");
+            exit();
+        }
         
         UserRepository::reject($id);
 
@@ -90,15 +110,19 @@ class UserController
             $ancient_user = $user;
 
             $user = new User();
+            $user->id = $ancient_user->id;
             $user->firstname = $_POST["firstname"];
             $user->lastname = $_POST["lastname"];
             $user->email = $_POST["email"];
+            $user->status = $ancient_user->status;
 
             if (!empty($_POST['password'])) {
                 $user->password = password_hash($_POST["password"], PASSWORD_DEFAULT);
             } else {
-                $user->password = $ancient_user->password;
+                $user->password = $_SESSION["user"]->password;
             }
+
+            $_SESSION["user"] = $user;
 
             UserRepository::update($user);
 
@@ -106,12 +130,12 @@ class UserController
                 "type" => "success",
                 "text" => "Le compte qui a comme id '" . $user->id . "', comme prénom
                             '" . $user->firstname . "' (anciennement
-                            '" . $ancient_user->firstname . "') et comme nom
+                            '" . $ancient_user->firstname . "'), comme nom
                             '" . $user->lastname . "' (anciennement
-                            '" . $ancient_user->lastname . "') a bien été modifié."
+                            '" . $ancient_user->lastname . "') et comme nom
+                            '" . $user->email . "' (anciennement
+                            '" . $ancient_user->email . "') a bien été modifié."
             ];
-
-            $_SESSION['user'] = $user;
 
             header("location: /admin/users");
             exit();

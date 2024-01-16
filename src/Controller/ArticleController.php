@@ -81,6 +81,7 @@ class ArticleController
             $ancient_article = $article;
 
             $article = new Article();
+            $article->id = $ancient_article->id;
             $article->title = $_POST["title"];
             $article->content = $_POST["content"];
             $article->last_update = date("y-m-d H:i:s");

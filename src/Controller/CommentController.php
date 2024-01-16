@@ -70,6 +70,8 @@ class CommentController
             "text" => "Commentaire rejeté."
         ];
 
+        CommentRepository::delete($comment_id);
+
         header("location: /admin/comments");
         exit();
     }

@@ -49,7 +49,7 @@
                                     <?= $user->status; ?>
                                 </td>
                                 <td class="border-2 border-secondary p-2 justify-content-between">
-                                    <?php if ($user->status === 'waiting') { ?>
+                                    <?php if ($user->status === 'waiting' && $_SESSION["user"]->id === "1") { ?>
                                         <a class="text-success" href="/admin/users/<?= $user->id; ?>/validate">
                                             Valider</a>
                                         /

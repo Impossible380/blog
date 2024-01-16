@@ -122,6 +122,15 @@ class AuthController
 
             header("location: /admin/users");
             exit();
+
+        } else if ($user->id === "1") {
+            $_SESSION["message"] = [
+                "type" => "danger",
+                "text" => "Vous ne pouvez pas supprimer votre compte car vous êtes l'administrateur du site."
+            ];
+
+            header("location: /admin/users");
+            exit();
         }
 
         $count_articles = ArticleRepository::countByUser($id);
@@ -142,6 +151,7 @@ class AuthController
 
             header("location: /");
             exit();
+            
         } else {
             $_SESSION["message"] = [
                 "type" => "danger",
